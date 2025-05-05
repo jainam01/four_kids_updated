@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 const HeroSection = () => {
   const [, navigate] = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
   
   const heroSlides = [
     {
@@ -136,7 +137,11 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              <div className="order-1 md:order-2 relative h-[400px] md:h-[600px] overflow-hidden">
+              <div 
+                className="order-1 md:order-2 relative h-[400px] md:h-[600px] overflow-hidden"
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
                 <img 
                   key={currentSlide}
                   src={currentHero.image}
