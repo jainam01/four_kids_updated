@@ -74,7 +74,7 @@ const CategorySelection = () => {
               <div className="group relative overflow-hidden rounded-lg transition-all duration-500 hover:shadow-xl hover:scale-[1.02]">
                 <div className="aspect-[4/5] w-full overflow-hidden">
                   <img 
-                    src={cat.image || "/placeholder.svg"} 
+                    src={'image' in cat ? (cat as {image: string}).image : "/placeholder.svg"} 
                     alt={cat.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />

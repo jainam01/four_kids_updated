@@ -73,28 +73,7 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Features Banner */}
-      <div className="bg-white border-b border-gray-100 mx-2.5">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center items-center py-2 gap-6 md:gap-8 flex-wrap">
-            <div className="flex items-center gap-2 text-xs md:text-sm font-semibold text-gray-700">
-              <span>Free Shipping Over $50</span>
-            </div>
-            <div className="hidden md:block w-px h-4 bg-gray-200"></div>
-            <div className="flex items-center gap-2 text-xs md:text-sm font-semibold text-gray-700">
-              <span>30-Day Returns</span>
-            </div>
-            <div className="hidden md:block w-px h-4 bg-gray-200"></div>
-            <div className="flex items-center gap-2 text-xs md:text-sm font-semibold text-gray-700">
-              <span>24/7 Customer Support</span>
-            </div>
-            <div className="hidden md:block w-px h-4 bg-gray-200"></div>
-            <div className="flex items-center gap-2 text-xs md:text-sm font-semibold text-gray-700">
-              <span>Secure Payment</span>
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       {/* Main Hero Section with Carousel */}
       <section 

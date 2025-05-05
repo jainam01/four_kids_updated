@@ -6,6 +6,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 
+// Define a custom product type to handle both API and fallback data
+type DisplayProduct = Product | {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  oldPrice: number;
+  discount: number;
+  moq: number;
+  slug: string;
+};
+
 const FeaturedCollection = () => {
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState<"featured" | "new">("featured");
@@ -17,7 +29,7 @@ const FeaturedCollection = () => {
   });
 
   // Sample product data to use as fallback
-  const productData = [
+  const productData: DisplayProduct[] = [
     {
       id: 1,
       name: "Classic Comfort Basic Pants",
@@ -122,20 +134,33 @@ const FeaturedCollection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
             {/* Use product data if available, otherwise fall back to sample data */}
             {(products?.length ? products.slice(0, 5) : productData).map((product, index) => {
-              // Destructure properties, handle both real data and sample data
-              const {
-                id,
-                name = product.name,
-                price = product.price,
-                salePrice = product.salePrice || (product.oldPrice ? product.price : undefined),
-                category = product.category || "",
-                slug = product.slug,
-                // Calculate discount percentage if not provided
-                discountPercentage = product.discountPercentage || product.discount ||
-                  (product.oldPrice ? Math.round(((product.oldPrice - price) / product.oldPrice) * 100) : 0)
-              } = product;
+              // Handle different product types safely with type guards
+              const isApiProduct = 'salePrice' in product;
+              const isSampleProduct = 'oldPrice' in product;
               
-              const oldPrice = product.oldPrice || (salePrice ? price : undefined);
+              // Extract common properties safely
+              const id = product.id;
+              const name = product.name;
+              const price = product.price;
+              const slug = product.slug;
+              
+              // Handle category display - API product has categoryId but needs to display a name
+              const category = isSampleProduct ? product.category : "";
+              
+              // Calculate discount and old price based on product type
+              let discountPercentage = 0;
+              let oldPrice: number | undefined;
+              
+              if (isApiProduct && product.salePrice) {
+                // For API products with salePrice
+                oldPrice = product.price;
+                discountPercentage = Math.round(((product.price - product.salePrice) / product.price) * 100);
+              } else if (isSampleProduct && product.oldPrice) {
+                // For sample products with oldPrice
+                oldPrice = product.oldPrice;
+                discountPercentage = product.discount || 
+                  Math.round(((product.oldPrice - price) / product.oldPrice) * 100);
+              }
               
               return (
                 <div 
@@ -176,7 +201,7 @@ const FeaturedCollection = () => {
                     </div>
                     
                     <div className="text-xs text-gray-500 mt-2">
-                      MOQ: {product.moq || 10} pcs
+                      MOQ: {isSampleProduct ? (product as any).moq : 10} pcs
                     </div>
                   </div>
                 </div>
