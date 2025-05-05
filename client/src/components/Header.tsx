@@ -158,7 +158,7 @@ const Header = () => {
                   variant="ghost" 
                   size="icon" 
                   onClick={() => navigate('/admin')}
-                  className="hover:bg-transparent font-poppins"
+                  className="hover:bg-transparent hover:text-inherit font-poppins"
                 >
                   <User className="h-5 w-5" />
                   <span className="sr-only">Sign In</span>
@@ -170,7 +170,7 @@ const Header = () => {
                   variant="ghost" 
                   size="icon" 
                   onClick={() => navigate('/watchlist')}
-                  className="hover:bg-transparent relative font-poppins"
+                  className="hover:bg-transparent hover:text-inherit relative font-poppins"
                 >
                   <Heart className="h-5 w-5" />
                   {watchlistItems.length > 0 && (
@@ -187,7 +187,7 @@ const Header = () => {
                   variant="ghost" 
                   size="icon" 
                   onClick={() => navigate('/cart')}
-                  className="hover:bg-transparent relative font-poppins"
+                  className="hover:bg-transparent hover:text-inherit relative font-poppins"
                 >
                   <ShoppingBag className="h-5 w-5" />
                   {cartItems.length > 0 && (
