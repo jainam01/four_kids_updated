@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60">
   <style>
     .logo-text { font-family: Arial, sans-serif; font-weight: bold; }
-    .desi { fill: #F01A3A; }
-    .qlo { fill: #F01A3A; }
+    .four { fill: #F01A3A; }
+    .kids { fill: #F01A3A; }
   </style>
-  <text x="10" y="40" class="logo-text desi" font-size="35">Desi</text>
-  <text x="100" y="40" class="logo-text qlo" font-size="35">Qlo</text>
+  <text x="10" y="40" class="logo-text four" font-size="35">Four</text>
+  <text x="100" y="40" class="logo-text kids" font-size="35">Kids</text>
 </svg>
