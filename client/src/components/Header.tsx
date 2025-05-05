@@ -211,7 +211,7 @@ const Header = () => {
               <Link 
                 key={link.path} 
                 href={link.path} 
-                className="text-white hover:text-gray-200 font-medium px-5 py-2.5 text-xs tracking-wide font-poppins hover-underline uppercase nav-link"
+                className="text-white hover:text-gray-200 font-medium px-5 py-2.5 text-xs tracking-wide font-poppins uppercase nav-link hover-underline relative"
               >
                 {link.name}
               </Link>

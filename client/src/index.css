@@ -227,15 +227,22 @@
     content: '';
     position: absolute;
     width: 0;
-    height: 1px;
-    bottom: -2px;
-    left: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: currentColor;
     transition: width 0.3s ease;
   }
   
   .hover-underline:hover::after {
-    width: 100%;
+    width: 70%;
+  }
+  
+  /* Special styling for nav menu links */
+  .nav-link.hover-underline::after {
+    bottom: 5px;
+    background-color: white;
   }
   
   /* Special styling for icon buttons */
