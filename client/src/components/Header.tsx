@@ -132,8 +132,8 @@ const Header = () => {
             </Link>
             
             {/* Right side: Search, Login, Watchlist, Basket */}
-            <div className="flex items-center space-x-3 md:space-x-4">
-              <div className="relative hidden md:block">
+            <div className="flex items-center space-x-1 md:space-x-2">
+              <div className="relative hidden md:block mr-2">
                 <form onSubmit={handleSearch} className="flex items-center">
                   <Input
                     type="search"
@@ -158,7 +158,7 @@ const Header = () => {
                   variant="ghost" 
                   size="icon" 
                   onClick={() => navigate('/admin')}
-                  className="hover:bg-transparent hover:text-inherit font-poppins"
+                  className="hover:bg-transparent hover:text-inherit font-poppins p-1"
                 >
                   <User className="h-5 w-5" />
                   <span className="sr-only">Sign In</span>
@@ -170,7 +170,7 @@ const Header = () => {
                   variant="ghost" 
                   size="icon" 
                   onClick={() => navigate('/watchlist')}
-                  className="hover:bg-transparent hover:text-inherit relative font-poppins"
+                  className="hover:bg-transparent hover:text-inherit relative font-poppins p-1"
                 >
                   <Heart className="h-5 w-5" />
                   {watchlistItems.length > 0 && (
@@ -187,7 +187,7 @@ const Header = () => {
                   variant="ghost" 
                   size="icon" 
                   onClick={() => navigate('/cart')}
-                  className="hover:bg-transparent hover:text-inherit relative font-poppins"
+                  className="hover:bg-transparent hover:text-inherit relative font-poppins p-1"
                 >
                   <ShoppingBag className="h-5 w-5" />
                   {cartItems.length > 0 && (
