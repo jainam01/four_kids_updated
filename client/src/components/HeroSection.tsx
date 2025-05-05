@@ -13,11 +13,11 @@ const HeroSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-3 text-center">
             <div>
               <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-4 text-[#232323] uppercase">FREE SHIPPING ACROSS USA</p>
-              <p className="text-xs">Enjoy free shipping on all orders</p>
+              <p className="text-base md:text-base text-xs leading-[22px] text-[#3c3c3c] mb-0">Enjoy free shipping on all orders</p>
             </div>
             <div>
               <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-4 text-[#232323] uppercase">UNBEATABLE INTERNATIONAL PRICE</p>
-              <p className="text-xs">Shop trendy picks at best lowest prices!</p>
+              <p className="text-base md:text-base text-xs leading-[22px] text-[#3c3c3c] mb-0">Shop trendy picks at best lowest prices!</p>
             </div>
           </div>
         </div>
