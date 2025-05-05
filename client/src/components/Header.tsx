@@ -132,8 +132,8 @@ const Header = () => {
             </Link>
             
             {/* Right side: Search, Login, Watchlist, Basket */}
-            <div className="flex items-center space-x-1 md:space-x-2">
-              <div className="relative hidden md:block mr-2">
+            <div className="flex items-center gap-4">
+              <div className="relative hidden md:block">
                 <form onSubmit={handleSearch} className="flex items-center">
                   <Input
                     type="search"
