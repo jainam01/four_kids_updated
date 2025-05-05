@@ -122,6 +122,31 @@
   .hover-underline:hover::after {
     width: 100%;
   }
+  
+  /* Special styling for icon buttons */
+  .hover-underline button::after {
+    display: none;
+  }
+  
+  .icon-underline {
+    position: relative;
+  }
+  
+  .icon-underline::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: hsl(var(--primary));
+    transition: width 0.3s ease;
+  }
+  
+  .icon-underline:hover::after {
+    width: 20px;
+  }
 }
 
 .category-btn.active {

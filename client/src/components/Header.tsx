@@ -153,45 +153,51 @@ const Header = () => {
                 </form>
               </div>
 
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => navigate('/admin')}
-                className="hover:bg-transparent"
-              >
-                <User className="h-5 w-5" />
-                <span className="sr-only">Sign In</span>
-              </Button>
+              <div className="relative icon-underline">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => navigate('/admin')}
+                  className="hover:bg-transparent font-poppins"
+                >
+                  <User className="h-5 w-5" />
+                  <span className="sr-only">Sign In</span>
+                </Button>
+              </div>
               
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => navigate('/watchlist')}
-                className="hover:bg-transparent relative"
-              >
-                <Heart className="h-5 w-5" />
-                {watchlistItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {watchlistItems.length}
-                  </span>
-                )}
-                <span className="sr-only">Wishlist</span>
-              </Button>
+              <div className="relative icon-underline">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => navigate('/watchlist')}
+                  className="hover:bg-transparent relative font-poppins"
+                >
+                  <Heart className="h-5 w-5" />
+                  {watchlistItems.length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {watchlistItems.length}
+                    </span>
+                  )}
+                  <span className="sr-only">Wishlist</span>
+                </Button>
+              </div>
 
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => navigate('/cart')}
-                className="hover:bg-transparent relative"
-              >
-                <ShoppingBag className="h-5 w-5" />
-                {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                  </span>
-                )}
-                <span className="sr-only">Cart</span>
-              </Button>
+              <div className="relative icon-underline">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => navigate('/cart')}
+                  className="hover:bg-transparent relative font-poppins"
+                >
+                  <ShoppingBag className="h-5 w-5" />
+                  {cartItems.length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                    </span>
+                  )}
+                  <span className="sr-only">Cart</span>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
