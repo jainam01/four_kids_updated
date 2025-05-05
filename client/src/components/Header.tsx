@@ -40,22 +40,22 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header className="sticky top-0 z-50 bg-white header-shadow">
       {/* Main Header - Single Row with Left (support links), Middle (logo), Right (search & icons) */}
-      <div className="py-4 bg-white border-b border-gray-200">
+      <div className="py-4 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Left side: Support, Wholesale, About Us */}
-            <div className="hidden md:flex items-center space-x-5">
+            <div className="hidden md:flex items-center space-x-6">
               {topLinks.map((link) => {
                 const Icon = link.icon;
                 return (
                   <Link 
                     key={link.path} 
                     href={link.path} 
-                    className="flex items-center text-gray-600 hover:text-primary text-xs font-poppins hover-underline"
+                    className="flex items-center text-gray-600 hover:text-primary text-xs font-poppins hover-underline nav-link"
                   >
-                    <Icon className="h-4 w-4 mr-1" />
+                    <Icon className="h-3.5 w-3.5 mr-1.5" />
                     <span>{link.name}</span>
                   </Link>
                 );
@@ -137,10 +137,10 @@ const Header = () => {
                 <form onSubmit={handleSearch} className="flex items-center">
                   <Input
                     type="search"
-                    placeholder="Search"
+                    placeholder="Search products..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-40 h-9 pr-10 rounded-full bg-gray-50"
+                    className="w-48 h-9 pr-10 rounded-md search-input font-poppins text-xs"
                   />
                   <Button 
                     type="submit"
@@ -211,7 +211,7 @@ const Header = () => {
               <Link 
                 key={link.path} 
                 href={link.path} 
-                className="text-white hover:text-primary font-medium px-6 py-3 text-xs font-poppins hover-underline"
+                className="text-white hover:text-gray-200 font-medium px-5 py-2.5 text-xs tracking-wide font-poppins hover-underline uppercase nav-link"
               >
                 {link.name}
               </Link>
