@@ -8,7 +8,7 @@ const HeroSection = () => {
   return (
     <div>
       {/* Top Banner - Style 1 */}
-      <div className="bg-[#b5e3d8] text-black">
+      <div className="bg-[#b5e3d8] text-black m-2.5">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-3 text-center">
             <div>
