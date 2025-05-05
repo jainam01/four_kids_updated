@@ -25,20 +25,20 @@ const HeroSection = () => {
       </div>
       
       {/* Top Banner - Style 2 */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-white border-b border-gray-100 mx-2.5">
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center py-2 gap-8">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 rounded px-5 py-3.5">
               <Truck className="h-5 w-5 text-primary" />
               <span className="text-sm font-bold text-[#232323]">MADE IN USA</span>
             </div>
             <div className="hidden md:block w-px h-4 bg-gray-200"></div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 rounded px-5 py-3.5">
               <Award className="h-5 w-5 text-primary" />
               <span className="text-sm font-bold text-[#232323]">ASSURED QUALITY</span>
             </div>
             <div className="hidden md:block w-px h-4 bg-gray-200"></div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 rounded px-5 py-3.5">
               <Palette className="h-5 w-5 text-primary" />
               <span className="text-sm font-bold text-[#232323]">TRENDY DESIGNS</span>
             </div>
