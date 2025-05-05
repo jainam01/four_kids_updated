@@ -23,13 +23,66 @@ const Header = () => {
   ];
 
   const mainNavLinks = [
-    { name: 'FEATURED', path: '/' },
-    { name: 'PANTS', path: '/category/pants' },
-    { name: 'CARGO', path: '/category/cargo' },
-    { name: 'CAPRIS', path: '/category/capris' },
-    { name: 'SHORTS', path: '/category/shorts' },
-    { name: 'MOM FIT', path: '/category/mom-fit' },
-    { name: 'ACCESSORIES', path: '/category/accessories' },
+    { 
+      name: 'FEATURED', 
+      path: '/',
+      subMenus: [
+        { name: 'New Arrivals', path: '/category/new-arrivals' },
+        { name: 'Best Sellers', path: '/category/best-sellers' },
+        { name: 'Sale Items', path: '/category/sale' }
+      ]
+    },
+    { 
+      name: 'PANTS', 
+      path: '/category/pants',
+      subMenus: [
+        { name: 'Regular Fit', path: '/category/pants/regular-fit' },
+        { name: 'Slim Fit', path: '/category/pants/slim-fit' },
+        { name: 'Wide Leg', path: '/category/pants/wide-leg' }
+      ]
+    },
+    { 
+      name: 'CARGO', 
+      path: '/category/cargo',
+      subMenus: [
+        { name: 'Utility Cargo', path: '/category/cargo/utility' },
+        { name: 'Fashion Cargo', path: '/category/cargo/fashion' }
+      ]
+    },
+    { 
+      name: 'CAPRIS', 
+      path: '/category/capris',
+      subMenus: [
+        { name: 'Three Quarter', path: '/category/capris/three-quarter' },
+        { name: 'Pedal Pushers', path: '/category/capris/pedal-pushers' }
+      ]
+    },
+    { 
+      name: 'SHORTS', 
+      path: '/category/shorts',
+      subMenus: [
+        { name: 'Bermuda', path: '/category/shorts/bermuda' },
+        { name: 'Denim Shorts', path: '/category/shorts/denim' },
+        { name: 'Sport Shorts', path: '/category/shorts/sport' }
+      ]
+    },
+    { 
+      name: 'MOM FIT', 
+      path: '/category/mom-fit',
+      subMenus: [
+        { name: 'Mom Jeans', path: '/category/mom-fit/jeans' },
+        { name: 'Mom Pants', path: '/category/mom-fit/pants' }
+      ]
+    },
+    { 
+      name: 'ACCESSORIES', 
+      path: '/category/accessories',
+      subMenus: [
+        { name: 'Belts', path: '/category/accessories/belts' },
+        { name: 'Hats', path: '/category/accessories/hats' },
+        { name: 'Bags', path: '/category/accessories/bags' }
+      ]
+    },
   ];
 
   const handleSearch = (e: React.FormEvent) => {
@@ -203,18 +256,38 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Navigation Menu */}
+      {/* Navigation Menu with Dropdowns */}
       <div className="bg-black text-white">
         <div className="container mx-auto px-4">
           <nav className="hidden md:flex justify-center">
             {mainNavLinks.map((link) => (
-              <Link 
-                key={link.path} 
-                href={link.path} 
-                className="text-white font-medium px-5 py-2.5 text-xs tracking-wide font-poppins uppercase main-nav-link"
-              >
-                {link.name}
-              </Link>
+              <div key={link.path} className="relative group">
+                <Link 
+                  href={link.path} 
+                  className="text-white font-medium px-5 py-2.5 text-xs tracking-wide font-poppins uppercase main-nav-link inline-block relative"
+                >
+                  {link.name}
+                  {/* Underline hover effect */}
+                  <span className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-1/2"></span>
+                </Link>
+                
+                {/* Dropdown Menu */}
+                {link.subMenus && link.subMenus.length > 0 && (
+                  <div className="absolute left-0 mt-0 w-48 bg-white shadow-lg rounded-sm z-50 transform scale-0 group-hover:scale-100 transition-transform duration-150 origin-top text-black">
+                    <div className="py-2">
+                      {link.subMenus.map((subMenu) => (
+                        <Link
+                          key={subMenu.path}
+                          href={subMenu.path}
+                          className="block px-4 py-2 text-xs hover:bg-gray-100 font-poppins"
+                        >
+                          {subMenu.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
         </div>

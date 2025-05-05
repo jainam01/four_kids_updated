@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Header Navigation Styles */
+.header-shadow {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.top-nav-link {
+  position: relative;
+}
+
+.top-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.top-nav-link:hover::after {
+  width: 100%;
+}
+
+.main-nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.main-nav-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.search-input {
+  border-color: #e2e8f0;
+}
+
+.search-input:focus {
+  border-color: #d1d5db;
+  box-shadow: none;
+  outline: none;
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;

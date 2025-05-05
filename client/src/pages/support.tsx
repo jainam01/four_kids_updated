@@ -1,322 +1,200 @@
-import { useState } from "react";
-import { Helmet } from "react-helmet";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import { Mail, MessageSquare, Phone, MapPin, TruckIcon, RotateCw, CreditCard, HelpCircle } from "lucide-react";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { 
+  MessageCircle, 
+  Mail, 
+  Phone, 
+  HelpCircle,
+  Clock
+} from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const Support = () => {
   const { toast } = useToast();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [subject, setSubject] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name || !email || !subject || !message) {
-      toast({
-        title: "Please fill in all fields",
-        variant: "destructive",
-      });
-      return;
-    }
+    // Here you would typically send the data to your API
+    toast({
+      title: "Support request submitted",
+      description: "We'll get back to you as soon as possible.",
+    });
     
-    setIsSubmitting(true);
-    
-    try {
-      // In a real app, this would be an API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Message sent!",
-        description: "We'll respond to your inquiry as soon as possible.",
-      });
-      
-      // Reset form
-      setName("");
-      setEmail("");
-      setSubject("");
-      setMessage("");
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to send your message. Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Reset form
+    setName('');
+    setEmail('');
+    setMessage('');
+    setSubject('');
   };
-  
-  const faqs = [
+
+  const faqItems = [
     {
-      question: "What sizes do you offer?",
-      answer: "We offer children's clothing in sizes ranging from 2-3 years (XS) to 12-13 years (XL). You can find detailed sizing information in our Size Guide to help you find the perfect fit for your child."
-    },
-    {
-      question: "How long does shipping take?",
-      answer: "Standard shipping typically takes 3-5 business days within the continental US. Express shipping options are available at checkout for faster delivery. International shipping times vary by destination, but generally take 7-14 business days."
+      question: "How do I track my order?",
+      answer: "You can track your order by logging into your account and visiting the 'Order History' section. Alternatively, use the tracking number provided in your shipping confirmation email."
     },
     {
       question: "What is your return policy?",
-      answer: "We offer a 30-day return policy for unworn items with tags attached. Returns are free for exchanges or store credit. If you prefer a refund to your original payment method, a small return shipping fee may apply."
+      answer: "We offer a 30-day return policy. Items must be unworn, unwashed, and with all original tags attached. Please visit our Return Portal to initiate a return."
     },
     {
-      question: "Do you offer bulk ordering for schools or events?",
-      answer: "Yes! We offer special pricing for bulk orders. Please fill out our contact form with details about your needs, and our team will get back to you with a custom quote."
+      question: "How do I find the right size for my child?",
+      answer: "We provide a comprehensive size guide for each product category. You can find it on product pages or in the 'Size Guide' section of our website. Measure your child and compare to our charts for the best fit."
     },
     {
-      question: "Are your clothes machine washable?",
-      answer: "Yes, most of our clothing items are machine washable. We recommend washing in cold water and tumble drying on low to maintain the quality and colors of the garments. Specific care instructions can be found on each product's label."
+      question: "Do you offer wholesale pricing?",
+      answer: "Yes, we offer wholesale pricing for qualified retailers. Please contact our wholesale department at wholesale@fourkids.com for more information."
     },
     {
-      question: "How can I track my order?",
-      answer: "Once your order ships, you'll receive a confirmation email with tracking information. You can also log into your account on our website to view order status and tracking details."
-    },
+      question: "How can I cancel my order?",
+      answer: "If your order hasn't shipped yet, you can cancel it by contacting our customer service team. Once an order has shipped, you'll need to wait for it to arrive and then follow our return process."
+    }
   ];
-  
+
   return (
-    <div className="container mx-auto px-4 py-8 pb-16 md:pb-8">
-      <Helmet>
-        <title>Customer Support - FourKids</title>
-      </Helmet>
-      
+    <div className="container mx-auto px-4 py-12">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2 text-center">Customer Support</h1>
-        <p className="text-gray-600 text-center mb-8">
-          We're here to help with any questions or concerns you may have
-        </p>
-        
-        <Tabs defaultValue="contact">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
-            <TabsTrigger value="contact">Contact Us</TabsTrigger>
-            <TabsTrigger value="faq">FAQ</TabsTrigger>
-            <TabsTrigger value="shipping">Shipping & Returns</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="contact">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="col-span-1">
-                <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h2 className="text-xl font-bold mb-4">Get In Touch</h2>
-                  <div className="space-y-6">
-                    <div className="flex items-start">
-                      <Mail className="h-5 w-5 text-primary mr-3 mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Email Us</h3>
-                        <p className="text-sm text-gray-600">support@fourkids.com</p>
-                        <p className="text-xs text-gray-500">Response time: 24-48 hours</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <Phone className="h-5 w-5 text-primary mr-3 mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Call Us</h3>
-                        <p className="text-sm text-gray-600">+1 (800) 123-4567</p>
-                        <p className="text-xs text-gray-500">Mon-Fri: 9AM - 5PM EST</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <MessageSquare className="h-5 w-5 text-primary mr-3 mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Live Chat</h3>
-                        <p className="text-sm text-gray-600">Chat with our support team</p>
-                        <p className="text-xs text-gray-500">Available 7 days a week</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <MapPin className="h-5 w-5 text-primary mr-3 mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Visit Us</h3>
-                        <p className="text-sm text-gray-600">123 Fashion Street</p>
-                        <p className="text-sm text-gray-600">New York, NY 10001</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="col-span-2">
-                <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h2 className="text-xl font-bold mb-4">Send a Message</h2>
-                  <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Your Name</Label>
-                        <Input
-                          id="name"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="John Doe"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email Address</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="john@example.com"
-                          required
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2 mb-4">
-                      <Label htmlFor="subject">Subject</Label>
-                      <Select 
-                        value={subject} 
-                        onValueChange={setSubject}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a topic" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="order">Order Inquiry</SelectItem>
-                          <SelectItem value="return">Return/Exchange</SelectItem>
-                          <SelectItem value="product">Product Information</SelectItem>
-                          <SelectItem value="bulk">Bulk Order</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div className="space-y-2 mb-6">
-                      <Label htmlFor="message">Message</Label>
-                      <Textarea
-                        id="message"
-                        rows={5}
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Please describe your inquiry in detail"
-                        required
-                      />
-                    </div>
-                    
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-primary text-white"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <div className="flex space-x-1">
-                          <div className="loading-dot w-2 h-2 bg-white rounded-full"></div>
-                          <div className="loading-dot w-2 h-2 bg-white rounded-full"></div>
-                          <div className="loading-dot w-2 h-2 bg-white rounded-full"></div>
-                        </div>
-                      ) : "Send Message"}
-                    </Button>
-                  </form>
-                </div>
-              </div>
+        <h1 className="text-3xl font-bold mb-2">Customer Support</h1>
+        <p className="text-gray-600 mb-8">We're here to help with any questions or concerns you may have.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+            <div className="mb-4 bg-primary/10 inline-flex p-3 rounded-full">
+              <MessageCircle className="h-6 w-6 text-primary" />
             </div>
-          </TabsContent>
-          
-          <TabsContent value="faq">
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold mb-6">Frequently Asked Questions</h2>
-              
-              <Accordion type="single" collapsible className="w-full">
-                {faqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger className="text-left">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-              
-              <div className="mt-8 text-center">
-                <p className="mb-4 text-gray-600">Can't find what you're looking for?</p>
-                <Button variant="outline" onClick={() => document.querySelector('button[value="contact"]')?.click()}>
-                  Contact Our Support Team
-                </Button>
-              </div>
+            <h3 className="text-lg font-bold mb-2">Live Chat</h3>
+            <p className="text-gray-600 mb-4 text-sm">Get instant help from our support team</p>
+            <div className="text-xs text-gray-500 flex items-center justify-center">
+              <Clock className="h-3 w-3 mr-1" /> 
+              <span>Available 9AM - 5PM EST</span>
             </div>
-          </TabsContent>
+          </div>
           
-          <TabsContent value="shipping">
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold mb-6">Shipping & Returns</h2>
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+            <div className="mb-4 bg-primary/10 inline-flex p-3 rounded-full">
+              <Mail className="h-6 w-6 text-primary" />
+            </div>
+            <h3 className="text-lg font-bold mb-2">Email Support</h3>
+            <p className="text-gray-600 mb-4 text-sm">Send us an email and we'll respond within 24 hours</p>
+            <a href="mailto:support@fourkids.com" className="text-primary text-sm font-medium">support@fourkids.com</a>
+          </div>
+          
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+            <div className="mb-4 bg-primary/10 inline-flex p-3 rounded-full">
+              <Phone className="h-6 w-6 text-primary" />
+            </div>
+            <h3 className="text-lg font-bold mb-2">Phone Support</h3>
+            <p className="text-gray-600 mb-4 text-sm">Call us directly for immediate assistance</p>
+            <a href="tel:1-800-555-KIDS" className="text-primary text-sm font-medium">1-800-555-KIDS</a>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+          {/* Contact Form */}
+          <div>
+            <h2 className="text-2xl font-bold mb-6">Contact Us</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Your Name
+                </label>
+                <Input
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Jane Doe"
+                  required
+                  className="w-full"
+                />
+              </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="jane@example.com"
+                  required
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                  Subject
+                </label>
+                <Input
+                  id="subject"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  placeholder="Order #12345"
+                  required
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  Message
+                </label>
+                <Textarea
+                  id="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="How can we help you?"
+                  required
+                  className="w-full min-h-[120px]"
+                />
+              </div>
+              
+              <Button type="submit" className="w-full">Send Message</Button>
+            </form>
+          </div>
+          
+          {/* FAQs */}
+          <div>
+            <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+            <Accordion type="single" collapsible className="w-full">
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left font-medium">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+            
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="flex items-start">
+                <HelpCircle className="h-5 w-5 text-primary mr-3 mt-0.5" />
                 <div>
-                  <div className="flex items-start mb-4">
-                    <TruckIcon className="h-6 w-6 text-primary mr-3" />
-                    <h3 className="text-lg font-semibold">Shipping Information</h3>
-                  </div>
-                  
-                  <div className="space-y-4 text-gray-600">
-                    <p>All orders are processed within 1-2 business days from the time of order confirmation. Once your order ships, you'll receive a confirmation email with tracking information.</p>
-                    
-                    <div className="border-t border-b py-4">
-                      <h4 className="font-semibold mb-2">Shipping Options</h4>
-                      <ul className="space-y-2 text-sm">
-                        <li className="flex justify-between">
-                          <span>Standard Shipping (3-5 business days)</span>
-                          <span>$4.99</span>
-                        </li>
-                        <li className="flex justify-between">
-                          <span>Express Shipping (2-3 business days)</span>
-                          <span>$9.99</span>
-                        </li>
-                        <li className="flex justify-between">
-                          <span>Next Day Shipping</span>
-                          <span>$14.99</span>
-                        </li>
-                        <li className="flex justify-between font-medium">
-                          <span>Free shipping on all orders over $50</span>
-                          <span>$0.00</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <p>International shipping is available to select countries. Shipping times and fees vary based on destination.</p>
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="flex items-start mb-4">
-                    <RotateCw className="h-6 w-6 text-primary mr-3" />
-                    <h3 className="text-lg font-semibold">Returns & Exchanges</h3>
-                  </div>
-                  
-                  <div className="space-y-4 text-gray-600">
-                    <p>We want you to be completely satisfied with your purchase. If for any reason you're not happy, we offer a simple return policy.</p>
-                    
-                    <div className="border-t border-b py-4">
-                      <h4 className="font-semibold mb-2">Return Policy</h4>
-                      <ul className="space-y-2 text-sm">
-                        <li>Items can be returned within 30 days of delivery</li>
-                        <li>Items must be unworn, unwashed, and have all original tags attached</li>
-                        <li>Returns are free for exchanges or store credit</li>
-                        <li>Refunds to original payment method may incur a $4.99 return shipping fee</li>
-                      </ul>
-                    </div>
-                    
-                    <p>To start a return or exchange, please visit our <a href="#" className="text-primary underline">Returns Portal</a> or contact our customer service team.</p>
-                  </div>
+                  <p className="text-sm text-gray-600">
+                    Can't find what you're looking for? Browse our <a href="/faq" className="text-primary font-medium">full FAQ section</a> or contact our support team.
+                  </p>
                 </div>
               </div>
             </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
       </div>
     </div>
   );

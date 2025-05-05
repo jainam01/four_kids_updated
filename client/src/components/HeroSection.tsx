@@ -30,104 +30,52 @@ const HeroSection = () => {
           <div className="flex justify-center items-center py-2 gap-8">
             <div className="flex items-center gap-2 rounded px-5 py-3.5">
               <Truck className="h-5 w-5 text-primary" />
-              <span className="text-sm font-bold text-[#232323]">MADE IN USA</span>
+              <span className="text-base md:text-base text-sm font-bold text-[#232323] mb-0">MADE IN USA</span>
             </div>
             <div className="hidden md:block w-px h-4 bg-gray-200"></div>
             <div className="flex items-center gap-2 rounded px-5 py-3.5">
               <Award className="h-5 w-5 text-primary" />
-              <span className="text-sm font-bold text-[#232323]">ASSURED QUALITY</span>
+              <span className="text-base md:text-base text-sm font-bold text-[#232323] mb-0">ASSURED QUALITY</span>
             </div>
             <div className="hidden md:block w-px h-4 bg-gray-200"></div>
             <div className="flex items-center gap-2 rounded px-5 py-3.5">
               <Palette className="h-5 w-5 text-primary" />
-              <span className="text-sm font-bold text-[#232323]">TRENDY DESIGNS</span>
+              <span className="text-base md:text-base text-sm font-bold text-[#232323] mb-0">TRENDY DESIGNS</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Hero Section */}
-      <section className="relative bg-white overflow-hidden">
+      {/* Main Hero Section - Based on reference design */}
+      <section className="relative bg-[#e8f4f2] overflow-hidden mx-2.5 mt-4 rounded-xl">
         <div className="relative">
-          {/* Left decorative element */}
-          <div className="absolute left-0 top-0 bottom-0 w-1/3 bg-gradient-to-r from-primary/5 to-primary/0 z-0"></div>
-          
-          {/* Right decorative element */}
-          <div className="absolute right-0 top-0 bottom-0 w-1/4 bg-gradient-to-l from-primary/5 to-primary/0 z-0"></div>
-        
-          <div className="container mx-auto px-4 py-10 md:py-16 relative z-10">
+          <div className="container mx-auto px-4 py-10 md:py-0 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div className="order-2 md:order-1">
-                <div className="bg-primary inline-block text-white text-xs uppercase font-bold tracking-wider px-3 py-1 rounded-full mb-4">
-                  New Collection
-                </div>
-                
-                <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-                  Back to School <span className="text-primary">Collection</span>
-                </h1>
+              <div className="order-2 md:order-1 py-6 md:py-16 pl-4 md:pl-8">
+                <h2 className="text-4xl md:text-6xl font-bold mb-2 text-gray-800">
+                  BREEZE '25
+                </h2>
                 
                 <p className="text-gray-600 mb-8 text-lg">
-                  Discover our new styles perfect for the classroom and playground. 
-                  Quality clothing that grows with your child.
+                  Light, Airy, Effortlessly Chic
                 </p>
                 
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap">
                   <Button
                     onClick={() => navigate("/category/new-arrivals")}
-                    className="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-md flex items-center gap-2"
+                    className="bg-black hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-sm uppercase"
                   >
-                    Shop Now
-                    <ArrowRight className="h-4 w-4" />
+                    SHOP NOW
                   </Button>
-                  
-                  <Button
-                    onClick={() => navigate("/collections")}
-                    variant="outline"
-                    className="border-2 border-primary text-primary hover:bg-primary/5 font-medium py-3 px-6 rounded-md"
-                  >
-                    View Collections
-                  </Button>
-                </div>
-                
-                <div className="mt-8 grid grid-cols-3 gap-6">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-primary">150+</div>
-                    <div className="text-xs text-gray-500 uppercase">Products</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-primary">50+</div>
-                    <div className="text-xs text-gray-500 uppercase">Styles</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-primary">5+</div>
-                    <div className="text-xs text-gray-500 uppercase">Categories</div>
-                  </div>
                 </div>
               </div>
               
               <div className="order-1 md:order-2 relative">
-                <div className="absolute -top-8 -right-8 w-40 h-40 bg-accent/20 rounded-full z-0"></div>
-                <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-primary/20 rounded-full z-0"></div>
-                
-                <div className="bg-white p-3 rounded-xl shadow-lg relative z-10">
-                  <img 
-                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" 
-                    alt="Kids in stylish back to school outfits" 
-                    className="rounded-lg w-full h-auto object-cover"
-                  />
-                  
-                  <div className="absolute -bottom-5 -left-5 bg-white p-2 rounded-lg shadow-md">
-                    <div className="bg-primary/10 text-primary text-xl font-bold px-3 py-1 rounded">
-                      -30%
-                    </div>
-                  </div>
-                  
-                  <div className="absolute -top-5 -right-5 bg-white p-3 rounded-full shadow-md">
-                    <div className="bg-accent/10 text-black text-xs font-bold px-2 py-1 rounded-full">
-                      NEW
-                    </div>
-                  </div>
-                </div>
+                <img 
+                  src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                  alt="Fashion models showcasing latest designs" 
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </div>
           </div>
