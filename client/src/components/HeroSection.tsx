@@ -12,11 +12,11 @@ const HeroSection = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-3 text-center">
             <div>
-              <p className="text-sm font-medium uppercase">FREE SHIPPING ACROSS USA</p>
+              <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-4 text-[#232323] uppercase">FREE SHIPPING ACROSS USA</p>
               <p className="text-xs">Enjoy free shipping on all orders</p>
             </div>
             <div>
-              <p className="text-sm font-medium uppercase">UNBEATABLE INTERNATIONAL PRICE</p>
+              <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-4 text-[#232323] uppercase">UNBEATABLE INTERNATIONAL PRICE</p>
               <p className="text-xs">Shop trendy picks at best lowest prices!</p>
             </div>
           </div>
@@ -28,18 +28,18 @@ const HeroSection = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center py-2 gap-8">
             <div className="flex items-center gap-2">
-              <Truck className="h-4 w-4 text-primary" />
-              <span className="text-xs font-medium">MADE IN USA</span>
+              <Truck className="h-5 w-5 text-primary" />
+              <span className="text-sm font-bold text-[#232323]">MADE IN USA</span>
             </div>
             <div className="hidden md:block w-px h-4 bg-gray-200"></div>
             <div className="flex items-center gap-2">
-              <Award className="h-4 w-4 text-primary" />
-              <span className="text-xs font-medium">ASSURED QUALITY</span>
+              <Award className="h-5 w-5 text-primary" />
+              <span className="text-sm font-bold text-[#232323]">ASSURED QUALITY</span>
             </div>
             <div className="hidden md:block w-px h-4 bg-gray-200"></div>
             <div className="flex items-center gap-2">
-              <Palette className="h-4 w-4 text-primary" />
-              <span className="text-xs font-medium">TRENDY DESIGNS</span>
+              <Palette className="h-5 w-5 text-primary" />
+              <span className="text-sm font-bold text-[#232323]">TRENDY DESIGNS</span>
             </div>
           </div>
         </div>
