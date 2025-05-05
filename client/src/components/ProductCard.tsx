@@ -91,92 +91,94 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
   if (viewMode === "list") {
     return (
       <div 
-        className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition group cursor-pointer"
+        className="product-card font-poppins cursor-pointer"
         onClick={handleNavigateToProduct}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
         <div className="flex flex-col sm:flex-row">
-          <div className="relative w-full sm:w-1/3">
+          <div className="relative w-full sm:w-1/3 product-image-container">
             <img 
               src={product.images[0]} 
               alt={product.name} 
-              className="w-full h-48 sm:h-full object-cover"
+              className="product-image w-full h-48 sm:h-full object-cover"
             />
-            <div className="absolute top-0 right-0 p-2">
+            <div className="absolute top-3 right-3 z-10">
               <Button 
                 variant="secondary"
                 size="icon"
-                className="rounded-full shadow-sm hover:scale-110 transition"
+                className="rounded-full bg-white shadow hover:scale-110 transition"
                 onClick={handleToggleWatchlist}
               >
-                <Heart className={`h-5 w-5 ${inWatchlist ? 'fill-primary text-primary' : ''}`} />
+                <Heart className={`h-4 w-4 ${inWatchlist ? 'fill-primary text-primary' : 'text-gray-500'}`} />
                 <span className="sr-only">Add to wishlist</span>
               </Button>
             </div>
             {product.isNew && (
-              <div className="absolute top-0 left-0 m-2">
-                <BadgeColored variant="success">NEW</BadgeColored>
+              <div className="product-badge bg-success text-white">
+                NEW
               </div>
             )}
-            {product.isOnSale && (
-              <div className="absolute top-0 left-0 m-2">
-                <BadgeColored variant="error">SALE</BadgeColored>
+            {product.isOnSale && !product.isNew && (
+              <div className="product-badge bg-primary text-white">
+                SALE
               </div>
             )}
           </div>
           <div className="p-4 flex-1 flex flex-col">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-bold text-lg mb-1">{product.name}</h3>
-                <div className="flex items-center mt-1 mb-2">
-                  {renderRatingStars(product.rating)}
+                <h3 className="product-title text-base mb-1">{product.name}</h3>
+                <div className="flex space-x-1 text-xs my-1">
+                  <span className="text-primary">{'★'.repeat(Math.floor(product.rating || 0))}</span>
+                  <span className="text-gray-300">{'★'.repeat(5 - Math.floor(product.rating || 0))}</span>
+                  <span className="text-gray-500">({product.reviewCount || 0})</span>
                 </div>
               </div>
               <div className="text-right">
                 {product.salePrice ? (
                   <div>
-                    <span className="text-primary font-bold text-lg">${product.salePrice.toFixed(2)}</span>
-                    <span className="text-gray-400 line-through text-sm ml-2">${product.price.toFixed(2)}</span>
+                    <span className="product-price">${product.salePrice.toFixed(2)}</span>
+                    <span className="product-old-price">${product.price.toFixed(2)}</span>
                   </div>
                 ) : (
-                  <span className="text-primary font-bold text-lg">${product.price.toFixed(2)}</span>
+                  <span className="product-price">${product.price.toFixed(2)}</span>
                 )}
               </div>
             </div>
             
-            <p className="text-gray-600 text-sm mt-2 mb-4 line-clamp-2">
+            <p className="text-gray-600 text-xs mt-2 mb-3 line-clamp-2 font-poppins">
               {product.description || `${product.name} for children - quality clothing for all occasions.`}
             </p>
             
-            <div className="mt-2 flex space-x-1">
+            <div className="mt-2 flex flex-wrap gap-1">
               {product.ageGroups.map(ageGroup => (
-                <span key={ageGroup} className="inline-block bg-muted rounded-full px-2 py-1 text-xs font-semibold text-gray-700">
+                <span key={ageGroup} className="inline-block bg-gray-100 rounded-full px-2 py-0.5 text-xs text-gray-600">
                   {ageGroup}
                 </span>
               ))}
-              <span className="inline-block bg-muted rounded-full px-2 py-1 text-xs font-semibold text-gray-700">
+              <span className="inline-block bg-gray-100 rounded-full px-2 py-0.5 text-xs text-gray-600">
                 {product.colors.length} {product.colors.length === 1 ? 'color' : 'colors'}
               </span>
             </div>
             
-            <div className="mt-auto pt-4 flex space-x-2">
+            <div className="mt-auto pt-3 flex gap-2">
               <Button 
-                className="bg-primary text-white font-bold rounded-lg hover:bg-opacity-90 transition flex-1"
+                className="btn-primary py-2 px-3 text-xs flex-1"
                 onClick={handleQuickAdd}
               >
-                <ShoppingCart className="mr-2 h-5 w-5" />
+                <ShoppingCart className="mr-1 h-3.5 w-3.5" />
                 Add to Cart
               </Button>
               <Button 
                 variant="outline"
-                className="rounded-lg font-bold"
+                className="py-2 px-3 text-xs rounded-md font-medium"
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(`/product/${product.slug}`);
                 }}
               >
-                <Eye className="mr-2 h-5 w-5" />
+                <Eye className="mr-1 h-3.5 w-3.5" />
                 View Details
               </Button>
             </div>
@@ -188,56 +190,58 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
 
   return (
     <div 
-      className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition group cursor-pointer"
+      className="product-card font-poppins cursor-pointer"
       onClick={handleNavigateToProduct}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <div className="relative">
+      <div className="product-image-container">
         <img 
           src={product.images[0]} 
           alt={product.name} 
-          className="w-full h-64 object-cover"
+          className="product-image h-64 object-cover"
         />
-        <div className="absolute top-0 right-0 p-2">
+        <div className="absolute top-3 right-3 z-10">
           <Button 
             variant="secondary"
             size="icon"
-            className="rounded-full shadow-sm hover:scale-110 transition"
+            className="rounded-full bg-white shadow hover:scale-110 transition"
             onClick={handleToggleWatchlist}
           >
-            <Heart className={`h-5 w-5 ${inWatchlist ? 'fill-primary text-primary' : ''}`} />
+            <Heart className={`h-4 w-4 ${inWatchlist ? 'fill-primary text-primary' : 'text-gray-500'}`} />
             <span className="sr-only">Add to wishlist</span>
           </Button>
         </div>
         
         {product.isNew && (
-          <div className="absolute top-0 left-0 m-2">
-            <BadgeColored variant="success">NEW</BadgeColored>
+          <div className="product-badge bg-success text-white">
+            NEW
           </div>
         )}
         
-        {product.isOnSale && (
-          <div className="absolute top-0 left-0 m-2">
-            <BadgeColored variant="error">SALE</BadgeColored>
+        {product.isOnSale && !product.isNew && (
+          <div className="product-badge bg-primary text-white">
+            SALE
           </div>
         )}
         
-        <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 transition-opacity duration-200 ${isHovering ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="flex justify-between">
+        <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 transition-opacity duration-300 ${isHovering ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="flex justify-between gap-2">
             <Button 
-              className="bg-primary text-white py-2 px-4 rounded-lg font-bold hover:bg-opacity-90 transition"
+              className="btn-primary flex-1 py-2 px-3 text-xs"
               onClick={handleQuickAdd}
             >
+              <ShoppingCart className="mr-1 h-3.5 w-3.5" />
               Quick Add
             </Button>
             <Button 
-              className="bg-white text-primary py-2 px-4 rounded-lg font-bold hover:bg-muted transition"
+              className="bg-white text-gray-700 py-2 px-3 rounded-md text-xs font-medium hover:bg-gray-100 transition flex-1"
               onClick={(e) => {
                 e.stopPropagation();
                 navigate(`/product/${product.slug}`);
               }}
             >
+              <Eye className="mr-1 h-3.5 w-3.5" />
               View
             </Button>
           </div>
@@ -245,26 +249,29 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
       </div>
       
       <div className="p-4">
-        <h3 className="font-bold text-lg mb-1">{product.name}</h3>
+        <h3 className="product-title font-poppins truncate">{product.name}</h3>
         <div className="flex justify-between items-center">
           {product.salePrice ? (
             <div>
-              <span className="text-primary font-bold">${product.salePrice.toFixed(2)}</span>
-              <span className="text-gray-400 line-through text-sm ml-2">${product.price.toFixed(2)}</span>
+              <span className="product-price">${product.salePrice.toFixed(2)}</span>
+              <span className="product-old-price">${product.price.toFixed(2)}</span>
             </div>
           ) : (
-            <span className="text-primary font-bold">${product.price.toFixed(2)}</span>
+            <span className="product-price">${product.price.toFixed(2)}</span>
           )}
-          {renderRatingStars(product.rating)}
+          <div className="flex space-x-1 text-xs">
+            <span className="text-primary">{'★'.repeat(Math.floor(product.rating || 0))}</span>
+            <span className="text-gray-300">{'★'.repeat(5 - Math.floor(product.rating || 0))}</span>
+          </div>
         </div>
         
-        <div className="mt-2 flex flex-wrap gap-1">
-          {product.ageGroups.map(ageGroup => (
-            <span key={ageGroup} className="inline-block bg-muted rounded-full px-2 py-1 text-xs font-semibold text-gray-700">
+        <div className="mt-3 flex flex-wrap gap-1">
+          {product.ageGroups.slice(0, 2).map(ageGroup => (
+            <span key={ageGroup} className="inline-block bg-gray-100 rounded-full px-2 py-0.5 text-xs text-gray-600">
               {ageGroup}
             </span>
           ))}
-          <span className="inline-block bg-muted rounded-full px-2 py-1 text-xs font-semibold text-gray-700">
+          <span className="inline-block bg-gray-100 rounded-full px-2 py-0.5 text-xs text-gray-600">
             {product.colors.length} {product.colors.length === 1 ? 'color' : 'colors'}
           </span>
         </div>
