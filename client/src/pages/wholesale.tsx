@@ -224,7 +224,11 @@ const Wholesale = () => {
             
             <div className="text-center">
               <Button 
-                onClick={() => document.querySelector('[data-value="apply"]')?.click()}
+                onClick={() => {
+                  // Find the apply tab and click it
+                  const applyTab = document.querySelector('[data-value="apply"]') as HTMLElement;
+                  if (applyTab) applyTab.click();
+                }}
                 className="bg-primary hover:bg-primary/90 text-white font-medium py-2.5 px-8 rounded-md"
               >
                 Apply Now

@@ -10,6 +10,9 @@ import Category from "@/pages/category";
 import SearchResults from "@/pages/search-results";
 import Support from "@/pages/support";
 import Admin from "@/pages/admin";
+import About from "@/pages/about";
+import Wholesale from "@/pages/wholesale";
+import Login from "@/pages/login";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import MobileNavigation from "./components/MobileNavigation";
@@ -31,6 +34,9 @@ function Router() {
           <Route path="/search" component={SearchResults} />
           <Route path="/support" component={Support} />
           <Route path="/admin" component={Admin} />
+          <Route path="/about" component={About} />
+          <Route path="/category/wholesale" component={Wholesale} />
+          <Route path="/login" component={Login} />
           <Route component={NotFound} />
         </Switch>
       </main>
