@@ -53,7 +53,7 @@ const Header = () => {
                   <Link 
                     key={link.path} 
                     href={link.path} 
-                    className="flex items-center text-gray-600 hover:text-primary text-sm"
+                    className="flex items-center text-gray-600 hover:text-primary text-xs font-poppins hover-underline"
                   >
                     <Icon className="h-4 w-4 mr-1" />
                     <span>{link.name}</span>
@@ -100,7 +100,7 @@ const Header = () => {
                           key={link.path} 
                           href={link.path}
                           onClick={() => setIsMenuOpen(false)}
-                          className="py-2 px-4 hover:bg-gray-100 rounded-md"
+                          className="py-2 px-4 hover:bg-gray-100 rounded-md font-poppins text-xs"
                         >
                           {link.name}
                         </Link>
@@ -113,7 +113,7 @@ const Header = () => {
                             key={link.path} 
                             href={link.path}
                             onClick={() => setIsMenuOpen(false)}
-                            className="py-2 px-4 hover:bg-gray-100 rounded-md flex items-center"
+                            className="py-2 px-4 hover:bg-gray-100 rounded-md flex items-center font-poppins text-xs"
                           >
                             <Icon className="h-4 w-4 mr-2" />
                             {link.name}
@@ -205,7 +205,7 @@ const Header = () => {
               <Link 
                 key={link.path} 
                 href={link.path} 
-                className="text-white hover:text-primary font-medium px-6 py-3 text-sm"
+                className="text-white hover:text-primary font-medium px-6 py-3 text-xs font-poppins hover-underline"
               >
                 {link.name}
               </Link>
