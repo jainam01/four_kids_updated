@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { Mail, CheckCircle, ArrowRight } from "lucide-react";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
@@ -44,41 +45,89 @@ const Newsletter = () => {
     }
   };
 
+  const benefits = [
+    "Exclusive discounts and promotions",
+    "New collection announcements",
+    "Seasonal style guides",
+    "Special birthday offers for your child"
+  ];
+
   return (
-    <section className="bg-gradient-to-r from-secondary to-primary py-12 my-12 rounded-xl">
-      <div className="container mx-auto px-4 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Join Our Newsletter</h2>
-        <p className="text-white text-opacity-90 mb-6 max-w-xl mx-auto">
-          Stay updated with the latest trends, exclusive offers, and new arrivals for your children.
-        </p>
-        
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-2">
-          <Input
-            type="email"
-            placeholder="Your email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-grow py-3 px-4 rounded-lg border-0 focus:ring-2 focus:ring-accent"
-            disabled={isSubmitting}
-          />
-          <Button 
-            type="submit" 
-            disabled={isSubmitting}
-            className="bg-accent text-dark font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition whitespace-nowrap"
-          >
-            {isSubmitting ? (
-              <div className="flex space-x-1">
-                <div className="loading-dot w-2 h-2 bg-dark rounded-full"></div>
-                <div className="loading-dot w-2 h-2 bg-dark rounded-full"></div>
-                <div className="loading-dot w-2 h-2 bg-dark rounded-full"></div>
+    <section className="bg-white py-16">
+      <div className="container mx-auto px-4">
+        <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl relative overflow-hidden">
+          <div className="absolute right-0 top-0 bottom-0 bg-gradient-to-l from-primary/10 to-transparent w-1/2"></div>
+          <div className="absolute left-10 top-10 w-20 h-20 bg-primary/10 rounded-full"></div>
+          <div className="absolute right-20 bottom-10 w-32 h-32 bg-primary/10 rounded-full"></div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 md:p-12 relative z-10">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium mb-6">
+                <Mail className="h-4 w-4" />
+                Newsletter
               </div>
-            ) : 'Subscribe'}
-          </Button>
-        </form>
-        
-        <p className="text-white text-opacity-70 text-sm mt-4">
-          By subscribing, you agree to our Privacy Policy and consent to receive updates from us.
-        </p>
+              
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
+              <p className="text-gray-600 mb-6">
+                Stay updated with the latest trends, exclusive offers, and new arrivals for your children.
+              </p>
+              
+              <ul className="space-y-3 mb-8">
+                {benefits.map((benefit, index) => (
+                  <li key={index} className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-primary mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="flex flex-col justify-center">
+              <div className="bg-white p-6 rounded-xl shadow-sm">
+                <h3 className="font-bold text-xl mb-4">Join Our Community</h3>
+                <p className="text-gray-500 text-sm mb-6">
+                  Get 10% off your first order when you sign up for our newsletter.
+                </p>
+                
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="relative">
+                    <Input
+                      type="email"
+                      placeholder="Your email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full py-3 px-4 border border-gray-200 rounded-lg focus-visible:ring-primary"
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <div className="flex space-x-1">
+                        <div className="loading-dot w-2 h-2 bg-white rounded-full"></div>
+                        <div className="loading-dot w-2 h-2 bg-white rounded-full"></div>
+                        <div className="loading-dot w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                    ) : (
+                      <>
+                        Subscribe Now
+                        <ArrowRight className="h-4 w-4" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+                
+                <p className="text-gray-400 text-xs text-center mt-4">
+                  By subscribing, you agree to our Privacy Policy and consent to receive marketing communications.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
