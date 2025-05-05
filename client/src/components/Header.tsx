@@ -46,7 +46,7 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Left side: Support, Wholesale, About Us */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:flex items-center gap-4">
               {topLinks.map((link) => {
                 const Icon = link.icon;
                 return (
