@@ -136,12 +136,16 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              <div className="order-1 md:order-2 relative">
+              <div className="order-1 md:order-2 relative h-[400px] md:h-[600px] overflow-hidden">
                 <img 
                   key={currentSlide}
                   src={currentHero.image}
                   alt={currentHero.title} 
-                  className="w-full h-auto object-cover transition-opacity duration-300"
+                  className="w-full h-full object-cover transition-all duration-700 ease-in-out transform scale-105 hover:scale-100"
+                  style={{
+                    opacity: 1,
+                    transform: `scale(${isHovering ? '1' : '1.05'})`,
+                  }}
                 />
               </div>
             </div>
