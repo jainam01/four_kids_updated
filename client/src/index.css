@@ -275,6 +275,47 @@
     color: inherit !important;
     background-color: transparent !important;
   }
+  
+  /* Top navigation links (Support, Wholesale, About Us) */
+  .top-nav-link {
+    position: relative;
+  }
+  
+  .top-nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #666;
+    transition: width 0.3s ease;
+  }
+  
+  .top-nav-link:hover::after {
+    width: 100%;
+  }
+  
+  /* Main navigation links (black bar) */
+  .main-nav-link {
+    position: relative;
+  }
+  
+  .main-nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    transition: width 0.3s ease;
+  }
+  
+  .main-nav-link:hover::after {
+    width: 60%;
+  }
 }
 
 .category-btn.active {

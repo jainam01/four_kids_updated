@@ -53,7 +53,7 @@ const Header = () => {
                   <Link 
                     key={link.path} 
                     href={link.path} 
-                    className="flex items-center text-gray-600 hover:text-primary text-xs font-poppins hover-underline nav-link"
+                    className="flex items-center text-gray-600 text-xs font-poppins top-nav-link"
                   >
                     <Icon className="h-3.5 w-3.5 mr-1.5" />
                     <span>{link.name}</span>
@@ -211,7 +211,7 @@ const Header = () => {
               <Link 
                 key={link.path} 
                 href={link.path} 
-                className="text-white hover:text-gray-200 font-medium px-5 py-2.5 text-xs tracking-wide font-poppins uppercase nav-link hover-underline relative"
+                className="text-white font-medium px-5 py-2.5 text-xs tracking-wide font-poppins uppercase main-nav-link"
               >
                 {link.name}
               </Link>
