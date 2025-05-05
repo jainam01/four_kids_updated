@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const OffersBanner = () => {
   const [, navigate] = useLocation();
   const [lightEffect, setLightEffect] = useState<'dim' | 'bright' | 'normal'>('normal');
-  
+
   // Light pulsing effect
   useEffect(() => {
     // Change light effect in a cycle: normal -> bright -> dim -> normal
@@ -15,10 +15,10 @@ const OffersBanner = () => {
         return 'normal';
       });
     }, 1200);
-    
+
     return () => clearInterval(interval);
   }, []);
-  
+
   const offers = [
     {
       code: "WELCOME2DQ",
@@ -36,7 +36,7 @@ const OffersBanner = () => {
       link: "/category/traditional",
     },
   ];
-  
+
   // Apply different background styles based on the light effect
   const getBgStyle = () => {
     if (lightEffect === 'bright') {
@@ -46,10 +46,10 @@ const OffersBanner = () => {
     }
     return "bg-gradient-to-r from-gray-100 via-white to-gray-100";
   };
-  
+
   return (
     <div className="container mx-auto px-4 my-8">
-      <div className={`rounded-md overflow-hidden transition-all duration-700 ${getBgStyle()}`}>
+      <div className="rounded-md overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
           {offers.map((offer, index) => (
             <div 
