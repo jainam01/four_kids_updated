@@ -10,12 +10,13 @@ const HeroSection = () => {
       {/* Top Banner - Style 1 */}
       <div className="bg-[#b5e3d8] text-black m-2.5">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-3 text-center">
-            <div>
+          <div className="flex flex-col md:flex-row justify-center items-center py-3 text-center">
+            <div className="flex-1 pb-3 md:pb-0">
               <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-1 text-[#232323] uppercase">FREE SHIPPING ACROSS USA</p>
               <p className="text-base md:text-base text-xs leading-[22px] text-[#3c3c3c] mb-0">Enjoy free shipping on all orders</p>
             </div>
-            <div>
+            <div className="hidden md:block w-px h-14 bg-[#232323]/20 mx-8"></div>
+            <div className="flex-1">
               <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-1 text-[#232323] uppercase">UNBEATABLE INTERNATIONAL PRICE</p>
               <p className="text-base md:text-base text-xs leading-[22px] text-[#3c3c3c] mb-0">Shop trendy picks at best lowest prices!</p>
             </div>
