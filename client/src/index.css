@@ -6,18 +6,18 @@
   --background: 0 0% 98%;
   --foreground: 240 10% 3.9%;
   
-  /* KidStyle brand colors */
-  --primary: 354 94% 71%; /* #FF6B6B */
+  /* Brand colors based on screenshot */
+  --primary: 352 100% 55%; /* #F01A3A - DesiQlo Red */
   --primary-foreground: 0 0% 100%;
   
-  --secondary: 173 60% 56%; /* #4ECDC4 */
+  --secondary: 352 100% 45%; /* #D0162F - Darker Red */
   --secondary-foreground: 0 0% 100%;
   
-  --accent: 43 100% 70%; /* #FFD166 */
-  --accent-foreground: 240 5.9% 10%;
+  --accent: 352 80% 65%; /* #F46C88 - Lighter Red */
+  --accent-foreground: 0 0% 100%;
   
   --success: 152 65% 47%; /* #22CC88 */
-  --error: 13 98% 66%; /* #FF7851 */
+  --error: 352 100% 55%; /* #F01A3A */
   --warning: 45 100% 51%; /* #FFC107 */
   
   --muted: 210 40% 93%;
