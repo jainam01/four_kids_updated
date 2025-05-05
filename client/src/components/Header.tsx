@@ -153,7 +153,7 @@ const Header = () => {
                 </form>
               </div>
 
-              <div className="relative icon-underline">
+              <div className="relative">
                 <Button 
                   variant="ghost" 
                   size="icon" 
@@ -165,7 +165,7 @@ const Header = () => {
                 </Button>
               </div>
               
-              <div className="relative icon-underline">
+              <div className="relative">
                 <Button 
                   variant="ghost" 
                   size="icon" 
@@ -182,7 +182,7 @@ const Header = () => {
                 </Button>
               </div>
 
-              <div className="relative icon-underline">
+              <div className="relative">
                 <Button 
                   variant="ghost" 
                   size="icon" 
