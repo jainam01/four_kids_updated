@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 98%;
+  --foreground: 240 10% 3.9%;
+  
+  /* KidStyle brand colors */
+  --primary: 354 94% 71%; /* #FF6B6B */
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 173 60% 56%; /* #4ECDC4 */
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 43 100% 70%; /* #FFD166 */
+  --accent-foreground: 240 5.9% 10%;
+  
+  --success: 152 65% 47%; /* #22CC88 */
+  --error: 13 98% 66%; /* #FF7851 */
+  --warning: 45 100% 51%; /* #FFC107 */
+  
+  --muted: 210 40% 93%;
+  --muted-foreground: 240 3.8% 46.1%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  
+  --border: 240 5.9% 88%;
+  --input: 240 5.9% 90%;
+  
+  --ring: var(--primary);
+  
+  --radius: 0.5rem;
+  
+  /* Chart colors */
+  --chart-1: var(--primary);
+  --chart-2: var(--secondary);
+  --chart-3: var(--accent);
+  --chart-4: 215 25% 27%;
+  --chart-5: 142 72% 29%;
+  
+  /* Sidebar colors */
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 240 10% 3.9%;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 210 40% 96.1%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  
+  /* Sidebar colors */
+  --sidebar-background: 224 71% 4%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply font-nunito antialiased bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .font-nunito {
+    font-family: 'Nunito', sans-serif;
+  }
+  
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+.category-btn.active {
+  background-color: hsl(var(--primary));
+  color: white;
+}
+
+/* Loading animation */
+.loading-dot {
+  animation: loading 1.4s infinite ease-in-out both;
+}
+.loading-dot:nth-child(1) { animation-delay: -0.32s; }
+.loading-dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes loading {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
