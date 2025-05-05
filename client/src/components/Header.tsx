@@ -204,7 +204,7 @@ const Header = () => {
       </div>
 
       {/* Navigation Menu */}
-      <div className="bg-secondary text-white">
+      <div className="bg-black text-white">
         <div className="container mx-auto px-4">
           <nav className="hidden md:flex justify-center">
             {mainNavLinks.map((link) => (

@@ -6,14 +6,14 @@
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
   
-  /* FourKids Brand Colors - Green Theme */
-  --primary: 142 70% 45%; /* #25B972 - FourKids Green */
+  /* FourKids Brand Colors based on the reference website */
+  --primary: 0 80% 50%; /* #F03333 - FourKids Red */
   --primary-foreground: 0 0% 100%;
   
-  --secondary: 142 60% 35%; /* #1E8D57 - Darker Green */
+  --secondary: 0 65% 45%; /* #D12D2D - Darker Red */
   --secondary-foreground: 0 0% 100%;
   
-  --accent: 142 80% 55%; /* #3DCF89 - Lighter Green */
+  --accent: 0 70% 60%; /* #E55353 - Lighter Red */
   --accent-foreground: 0 0% 100%;
   
   --success: 160 84% 39%; /* #00CA88 */
