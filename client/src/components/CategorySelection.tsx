@@ -1,20 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { 
-  BookOpen, Package, Archive, Ruler, Search, Plus, ChevronRight
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Category } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-
-const CategoryIcons = {
-  pants: <BookOpen className="h-6 w-6 text-primary" />,
-  cargo: <Package className="h-6 w-6 text-primary" />,
-  capris: <Archive className="h-6 w-6 text-primary" />,
-  shorts: <Ruler className="h-6 w-6 text-primary" />,
-  "mom-fit": <Plus className="h-6 w-6 text-primary" />,
-  default: <Search className="h-6 w-6 text-primary" />
-};
 
 const CategorySelection = () => {
   const [, navigate] = useLocation();
@@ -22,69 +10,92 @@ const CategorySelection = () => {
     queryKey: ['/api/categories'],
   });
 
-  const getIconForCategory = (slug: string) => {
-    return CategoryIcons[slug as keyof typeof CategoryIcons] || CategoryIcons.default;
-  };
-
   const handleCategoryClick = (slug: string) => {
     navigate(`/category/${slug}`);
   };
 
+  // Extended category type to handle the image property
+  type ExtendedCategory = Category | {
+    name: string;
+    slug: string;
+    image: string;
+  };
+  
+  const categoryData: ExtendedCategory[] = [
+    {
+      name: "Basic Pants",
+      slug: "basic-pants",
+      image: "/placeholder.svg",
+    },
+    {
+      name: "Cargo Pants",
+      slug: "cargo-pants",
+      image: "/placeholder.svg",
+    },
+    {
+      name: "Capri Pants",
+      slug: "capri-pants",
+      image: "/placeholder.svg",
+    },
+    {
+      name: "Shorts Collection",
+      slug: "shorts",
+      image: "/placeholder.svg",
+    }
+  ];
+
   return (
-    <section className="py-14 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <div>
-            <h2 className="section-title text-2xl md:text-3xl font-bold">Browse by Category</h2>
-            <p className="text-gray-500 mt-2">Find the perfect style for your child</p>
-          </div>
-          
-          <Button
-            onClick={() => navigate("/categories")}
-            variant="ghost"
-            className="mt-4 md:mt-0 text-primary hover:text-primary/90 hover:bg-primary/5 flex items-center gap-1"
-          >
-            View All Categories
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-        
+    <div className="container mx-auto px-12 md:px-20 my-16">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold mb-3">Shop by Category</h2>
+        <div className="w-20 h-1 bg-primary mx-auto"></div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {Array(5).fill(0).map((_, index) => (
-              <div key={index} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                <Skeleton className="h-16 w-16 rounded-full mx-auto mb-3" />
-                <Skeleton className="h-5 w-24 mx-auto mb-2" />
-                <Skeleton className="h-4 w-16 mx-auto" />
+          Array(4).fill(0).map((_, index) => (
+            <div key={index} className="relative overflow-hidden rounded-lg">
+              <Skeleton className="aspect-[4/5] w-full" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+                <Skeleton className="h-6 w-24" />
               </div>
-            ))}
-          </div>
+            </div>
+          ))
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {categories?.map((category) => (
-              <div 
-                key={category.id} 
-                className="bg-white border border-gray-100 p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-center cursor-pointer group"
-                onClick={() => handleCategoryClick(category.slug)}
-              >
-                <div className="bg-gray-50 group-hover:bg-primary/10 rounded-full h-16 w-16 flex items-center justify-center mx-auto transition-colors duration-300">
-                  {getIconForCategory(category.slug)}
+          (categories?.length ? categories.slice(0, 4) : categoryData).map((cat, index) => (
+            <a 
+              key={index} 
+              href={`/category/${cat.slug}`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleCategoryClick(cat.slug);
+              }}
+            >
+              <div className="group relative overflow-hidden rounded-lg transition-all duration-500 hover:shadow-xl hover:scale-[1.02]">
+                <div className="aspect-[4/5] w-full overflow-hidden">
+                  <img 
+                    src={cat.image || "/placeholder.svg"} 
+                    alt={cat.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-                <h3 className="mt-4 font-bold text-gray-800 group-hover:text-primary transition-colors duration-300">{category.name}</h3>
-                <p className="text-sm text-gray-500 mt-1">{category.itemCount || 0} items</p>
                 
-                <div className="mt-4 flex justify-center">
-                  <span className="inline-flex items-center text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    View Products
-                    <ChevronRight className="h-3 w-3 ml-1" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-300"></div>
+                
+                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+                  <h3 className="text-lg md:text-xl font-bold mb-1 group-hover:text-white/90 transition-colors">{cat.name}</h3>
+                  
+                  <span className="inline-flex items-center text-xs font-medium text-white/80 group-hover:text-white transition-colors">
+                    Shop Now
+                    <ChevronRight className="h-3 w-3 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
                   </span>
                 </div>
               </div>
-            ))}
-          </div>
+            </a>
+          ))
         )}
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -1,121 +1,187 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Product } from "@shared/schema";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/utils";
 
 const FeaturedCollection = () => {
   const [, navigate] = useLocation();
-  const { data: featuredCollections, isLoading } = useQuery<Product[]>({
-    queryKey: ['/api/products', { isFeatured: true }],
+  const [activeTab, setActiveTab] = useState<"featured" | "new">("featured");
+  
+  const { data: products, isLoading } = useQuery<Product[]>({
+    queryKey: ['/api/products', { 
+      ...(activeTab === "featured" ? { isFeatured: true } : { isNew: true }) 
+    }],
   });
 
-  const collections = [
+  // Sample product data to use as fallback
+  const productData = [
     {
-      title: "New Arrivals",
-      description: "Fresh styles just landed",
-      badge: "New Season",
-      path: "/category/new-arrivals",
-      image: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7",
-      accentColor: "bg-primary/10 text-primary"
+      id: 1,
+      name: "Classic Comfort Basic Pants",
+      category: "Basic Pants",
+      price: 199,
+      oldPrice: 250,
+      discount: 20,
+      moq: 10,
+      slug: "classic-comfort-basic-pants"
     },
     {
-      title: "School Essentials",
-      description: "Ready for the classroom",
-      badge: "Best Seller",
-      path: "/category/school-essentials",
-      image: "https://images.unsplash.com/photo-1516627145497-ae6968895b74",
-      accentColor: "bg-secondary/10 text-secondary"
+      id: 2,
+      name: "Adventure Cargo Pants",
+      category: "Cargo Pants",
+      price: 299,
+      oldPrice: 350,
+      discount: 15,
+      moq: 8,
+      slug: "adventure-cargo-pants"
     },
     {
-      title: "Clearance Sale",
-      description: "Up to 60% off",
-      badge: "Limited Time",
-      path: "/category/sale",
-      image: "https://images.unsplash.com/photo-1557383644-0f7b371688db",
-      accentColor: "bg-accent/10 text-accent"
+      id: 3,
+      name: "Summer Day Capri",
+      category: "Capri",
+      price: 189,
+      oldPrice: 220,
+      discount: 14,
+      moq: 12,
+      slug: "summer-day-capri"
     },
     {
-      title: "Special Occasions",
-      description: "Picture-perfect styles",
-      badge: "Featured",
-      path: "/category/special-occasions",
-      image: "https://images.unsplash.com/photo-1520923642038-b4259acecbd7",
-      accentColor: "bg-black/10 text-black"
+      id: 4,
+      name: "Everyday Play Shorts",
+      category: "Shorts",
+      price: 149,
+      oldPrice: 180,
+      discount: 17,
+      moq: 15,
+      slug: "everyday-play-shorts"
+    },
+    {
+      id: 5,
+      name: "Classic Mom Fit Jeans",
+      category: "Mom Fit",
+      price: 279,
+      oldPrice: 320,
+      discount: 13,
+      moq: 10,
+      slug: "classic-mom-fit-jeans"
     }
   ];
-
+  
   return (
-    <section className="bg-gray-50 py-16">
+    <section className="py-14 bg-white">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-10">
-          <div>
-            <h2 className="section-title text-2xl md:text-3xl font-bold">Featured Collections</h2>
-            <p className="text-gray-500 mt-2">
-              Discover our handpicked selection of trending styles perfect for the season
-            </p>
-          </div>
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold">Our Products</h2>
+          <p className="text-gray-600 mt-2">
+            Browse our selection of high-quality children's clothing at wholesale prices
+          </p>
           
-          <Button
-            onClick={() => navigate("/collections")}
-            variant="ghost"
-            className="mt-4 md:mt-0 text-primary hover:text-primary/90 hover:bg-primary/5 flex items-center gap-1"
-          >
-            View All Collections
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+          <div className="flex justify-center mt-6">
+            <div className="inline-flex border border-gray-200 rounded-md p-1 bg-gray-50">
+              <Button
+                variant="ghost"
+                className={`rounded-md px-6 py-2 text-sm ${
+                  activeTab === "featured" 
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+                onClick={() => setActiveTab("featured")}
+              >
+                Featured Products
+              </Button>
+              <Button
+                variant="ghost"
+                className={`rounded-md px-6 py-2 text-sm ${
+                  activeTab === "new" 
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+                onClick={() => setActiveTab("new")}
+              >
+                New Arrivals
+              </Button>
+            </div>
+          </div>
         </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
             {Array(4).fill(0).map((_, index) => (
-              <Skeleton key={index} className="h-96 w-full rounded-xl" />
+              <div key={index} className="bg-gray-100 rounded-md p-4">
+                <Skeleton className="w-full aspect-square rounded-md mb-4" />
+                <Skeleton className="h-5 w-2/3 mb-2" />
+                <Skeleton className="h-4 w-1/3 mb-4" />
+                <Skeleton className="h-6 w-1/2" />
+              </div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {collections.map((collection, index) => (
-              <div 
-                key={index} 
-                className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group relative"
-                onClick={() => navigate(collection.path)}
-              >
-                <div className="h-64 overflow-hidden">
-                  <img 
-                    src={collection.image} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    alt={collection.title} 
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${collection.accentColor}`}>
-                      {collection.badge}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{collection.title}</h3>
-                  <p className="text-gray-600 mb-4">{collection.description}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+            {/* Use product data if available, otherwise fall back to sample data */}
+            {(products?.length ? products.slice(0, 5) : productData).map((product, index) => {
+              // Destructure properties, handle both real data and sample data
+              const {
+                id,
+                name = product.name,
+                price = product.price,
+                salePrice = product.salePrice || (product.oldPrice ? product.price : undefined),
+                category = product.category || "",
+                slug = product.slug,
+                // Calculate discount percentage if not provided
+                discountPercentage = product.discountPercentage || product.discount ||
+                  (product.oldPrice ? Math.round(((product.oldPrice - price) / product.oldPrice) * 100) : 0)
+              } = product;
+              
+              const oldPrice = product.oldPrice || (salePrice ? price : undefined);
+              
+              return (
+                <div 
+                  key={id || index} 
+                  className="bg-gray-100 rounded-md overflow-hidden group cursor-pointer"
+                  onClick={() => navigate(`/product/${slug}`)}
+                >
+                  {/* Discount Badge */}
+                  {discountPercentage > 0 && (
+                    <div className="absolute left-3 top-3 z-10">
+                      <div className="bg-red-500 text-white text-xs font-bold rounded px-2 py-1">
+                        -{discountPercentage}%
+                      </div>
+                    </div>
+                  )}
                   
-                  <div className="flex items-center justify-between">
-                    <Button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(collection.path);
-                      }}
-                      variant="ghost"
-                      className="px-0 text-primary hover:text-primary/90 hover:bg-transparent flex items-center gap-1 text-sm font-medium"
-                    >
-                      Shop Collection
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
+                  {/* Product Image */}
+                  <div className="relative aspect-square bg-white flex items-center justify-center p-4">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <img 
+                        src="/placeholder.svg"
+                        alt={name}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Product Info */}
+                  <div className="p-4">
+                    <div className="text-xs text-gray-500 mb-1">{category}</div>
+                    <h3 className="font-medium text-gray-900 mb-2 line-clamp-2">{name}</h3>
                     
-                    <span className="text-sm text-gray-500 font-medium group-hover:text-primary transition-colors">15+ Items</span>
+                    <div className="flex items-end gap-2 mt-3">
+                      <span className="text-gray-900 font-bold">₹{price}</span>
+                      {oldPrice && (
+                        <span className="text-gray-400 line-through text-sm">₹{oldPrice}</span>
+                      )}
+                    </div>
+                    
+                    <div className="text-xs text-gray-500 mt-2">
+                      MOQ: {product.moq || 10} pcs
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
