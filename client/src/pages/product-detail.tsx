@@ -17,6 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/ProductCard";
 import { BadgeColored } from "@/components/ui/badge-colored";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/page-header"; // Added import for PageHeader
 
 const ProductDetail = () => {
   const { slug } = useParams();
@@ -24,27 +25,27 @@ const ProductDetail = () => {
   const { toast } = useToast();
   const { addToCart } = useCart();
   const { addToWatchlist, isInWatchlist, removeFromWatchlist } = useWatchlist();
-  
+
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  
+
   const { data: product, isLoading } = useQuery<Product>({
     queryKey: [`/api/products/${slug}`],
   });
-  
+
   // Related products query
   const { data: relatedProducts, isLoading: isLoadingRelated } = useQuery<Product[]>({
     queryKey: ['/api/products', { limit: 4 }],
     enabled: !!product,
   });
-  
+
   const inWatchlist = product ? isInWatchlist(product.id) : false;
-  
+
   const handleToggleWatchlist = async () => {
     if (!product) return;
-    
+
     try {
       if (inWatchlist) {
         await removeFromWatchlist(product.id);
@@ -67,10 +68,10 @@ const ProductDetail = () => {
       });
     }
   };
-  
+
   const handleAddToCart = async () => {
     if (!product) return;
-    
+
     if (!selectedSize) {
       toast({
         title: "Please select a size",
@@ -79,7 +80,7 @@ const ProductDetail = () => {
       });
       return;
     }
-    
+
     if (!selectedColor) {
       toast({
         title: "Please select a color",
@@ -88,7 +89,7 @@ const ProductDetail = () => {
       });
       return;
     }
-    
+
     try {
       await addToCart({
         productId: product.id,
@@ -96,7 +97,7 @@ const ProductDetail = () => {
         size: selectedSize,
         color: selectedColor
       });
-      
+
       toast({
         title: "Added to cart",
         description: `${product.name} has been added to your cart.`,
@@ -109,7 +110,7 @@ const ProductDetail = () => {
       });
     }
   };
-  
+
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (isNaN(value) || value < 1) {
@@ -118,7 +119,7 @@ const ProductDetail = () => {
       setQuantity(value);
     }
   };
-  
+
   const handleBulkOrder = () => {
     // In a real app, this would open a bulk order form or modal
     toast({
@@ -126,11 +127,11 @@ const ProductDetail = () => {
       description: "Our team will contact you shortly for bulk order details.",
     });
   };
-  
+
   const renderRatingStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
-    
+
     return (
       <div className="flex space-x-1">
         <span className="text-accent">{'★'.repeat(fullStars)}</span>
@@ -139,7 +140,7 @@ const ProductDetail = () => {
       </div>
     );
   };
-  
+
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -165,7 +166,7 @@ const ProductDetail = () => {
       </div>
     );
   }
-  
+
   if (!product) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -175,14 +176,14 @@ const ProductDetail = () => {
       </div>
     );
   }
-  
+
   return (
     <>
       <Helmet>
         <title>{`${product.name} - FourKids`}</title>
         <meta name="description" content={product.description || `${product.name} - Quality children's clothing from FourKids.`} />
       </Helmet>
-      
+      <PageHeader title={product.name} currentPage="Product Details" backgroundImage="/placeholder.svg" /> {/* Added PageHeader */}
       <div className="container mx-auto px-4 py-8 pb-16 md:pb-8">
         {/* Breadcrumbs */}
         <div className="flex items-center text-sm mb-6">
@@ -199,7 +200,7 @@ const ProductDetail = () => {
           <span className="mx-2">/</span>
           <span className="text-foreground font-medium">{product.name}</span>
         </div>
-        
+
         <div className="flex flex-col md:flex-row gap-8">
           {/* Product Images */}
           <div className="md:w-1/2">
@@ -210,7 +211,7 @@ const ProductDetail = () => {
                 className="w-full h-auto object-cover aspect-square"
               />
             </div>
-            
+
             <div className="grid grid-cols-4 gap-2 mt-4">
               {product.images.map((image, index) => (
                 <button
@@ -229,7 +230,7 @@ const ProductDetail = () => {
               ))}
             </div>
           </div>
-          
+
           {/* Product Info */}
           <div className="md:w-1/2">
             <div className="flex items-start justify-between">
@@ -240,17 +241,17 @@ const ProductDetail = () => {
                     {renderRatingStars(product.rating)}
                     <span className="ml-2 text-sm text-gray-500">({product.reviewCount} reviews)</span>
                   </div>
-                  
+
                   {product.isNew && (
                     <BadgeColored variant="success">NEW</BadgeColored>
                   )}
-                  
+
                   {product.isOnSale && (
                     <BadgeColored variant="error">SALE</BadgeColored>
                   )}
                 </div>
               </div>
-              
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -263,7 +264,7 @@ const ProductDetail = () => {
                 </span>
               </Button>
             </div>
-            
+
             <div className="mt-6">
               <div className="flex items-baseline">
                 {product.salePrice ? (
@@ -278,12 +279,12 @@ const ProductDetail = () => {
                   <span className="text-2xl font-bold text-primary">${product.price.toFixed(2)}</span>
                 )}
               </div>
-              
+
               <p className="mt-6 text-gray-600">
                 {product.description || `${product.name} for children - quality clothing for all occasions.`}
               </p>
             </div>
-            
+
             {/* Size Selection */}
             <div className="mt-6">
               <div className="flex items-center justify-between mb-2">
@@ -306,7 +307,7 @@ const ProductDetail = () => {
                 ))}
               </div>
             </div>
-            
+
             {/* Color Selection */}
             <div className="mt-6">
               <h3 className="font-semibold mb-2">Color</h3>
@@ -323,7 +324,7 @@ const ProductDetail = () => {
                 ))}
               </div>
             </div>
-            
+
             {/* Quantity */}
             <div className="mt-6">
               <h3 className="font-semibold mb-2">Quantity</h3>
@@ -361,7 +362,7 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Add to Cart Button */}
             <div className="mt-8 space-y-4">
               <Button
@@ -372,7 +373,7 @@ const ProductDetail = () => {
                 <ShoppingBag className="mr-2 h-5 w-5" />
                 Add to Cart
               </Button>
-              
+
               <Button
                 variant="outline"
                 onClick={handleBulkOrder}
@@ -381,7 +382,7 @@ const ProductDetail = () => {
                 Request Bulk Order
               </Button>
             </div>
-            
+
             {/* Product Features */}
             <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="flex items-center space-x-2 text-sm">
@@ -403,7 +404,7 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Tabs Section */}
         <div className="mt-12 bg-white rounded-xl shadow-sm p-6">
           <Tabs defaultValue="details">
@@ -413,11 +414,11 @@ const ProductDetail = () => {
               <TabsTrigger value="care">Care Instructions</TabsTrigger>
               <TabsTrigger value="reviews">Reviews ({product.reviewCount})</TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="details">
               <div className="space-y-4 text-gray-600">
                 <p>{product.description || `${product.name} for children - quality clothing that's comfortable and stylish.`}</p>
-                
+
                 <h4 className="font-bold text-foreground">Features:</h4>
                 <ul className="list-disc pl-5 space-y-1">
                   <li>Premium quality fabric</li>
@@ -426,12 +427,12 @@ const ProductDetail = () => {
                   <li>Easy to care for</li>
                   <li>Suitable for all seasons</li>
                 </ul>
-                
+
                 <h4 className="font-bold text-foreground">Material:</h4>
                 <p>100% Cotton (may vary depending on color selection)</p>
               </div>
             </TabsContent>
-            
+
             <TabsContent value="sizing">
               <div className="space-y-4 text-gray-600">
                 <h4 className="font-bold text-foreground">Size Chart:</h4>
@@ -485,12 +486,12 @@ const ProductDetail = () => {
                     </tbody>
                   </table>
                 </div>
-                
+
                 <h4 className="font-bold text-foreground">Fit Information:</h4>
                 <p>This product is designed for a regular fit. If your child is between sizes, we recommend sizing up for room to grow.</p>
               </div>
             </TabsContent>
-            
+
             <TabsContent value="care">
               <div className="space-y-4 text-gray-600">
                 <h4 className="font-bold text-foreground">Washing Instructions:</h4>
@@ -502,12 +503,12 @@ const ProductDetail = () => {
                   <li>Cool iron if needed</li>
                   <li>Do not dry clean</li>
                 </ul>
-                
+
                 <h4 className="font-bold text-foreground">Care Tips:</h4>
                 <p>To maintain the color and shape of your garment, turn inside out before washing and avoid using fabric softeners.</p>
               </div>
             </TabsContent>
-            
+
             <TabsContent value="reviews">
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
@@ -518,12 +519,12 @@ const ProductDetail = () => {
                     </div>
                     <p className="text-sm text-gray-500">Based on {product.reviewCount} reviews</p>
                   </div>
-                  
+
                   <Button className="ml-auto">Write a Review</Button>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="text-center py-8">
                   <p className="text-gray-500">Detailed reviews will be implemented in a future update.</p>
                 </div>
@@ -531,11 +532,11 @@ const ProductDetail = () => {
             </TabsContent>
           </Tabs>
         </div>
-        
+
         {/* Related Products */}
         <div className="mt-12">
           <h2 className="text-2xl font-bold mb-6">You Might Also Like</h2>
-          
+
           {isLoadingRelated ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {Array(4).fill(0).map((_, index) => (

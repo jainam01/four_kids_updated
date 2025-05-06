@@ -6,6 +6,8 @@ import {
   Users
 } from 'lucide-react';
 
+import { PageHeader } from "@/components/ui/page-header";
+
 const AboutUs = () => {
   const team = [
     {
@@ -58,7 +60,9 @@ const AboutUs = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <>
+      <PageHeader title="About Us" currentPage="About" backgroundImage="/placeholder.svg" />
+      <div className="container mx-auto px-4 py-12">
       {/* Hero Section */}
       <div className="max-w-4xl mx-auto text-center mb-16">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">Our Story</h1>
