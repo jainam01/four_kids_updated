@@ -18,7 +18,7 @@ const Header = () => {
 
   const topLinks = [
     { name: 'Support', path: '/support', icon: HelpCircle },
-    { name: 'Wholesale', path: '/category/wholesale', icon: Building2 },
+    { name: 'Wholesale', path: '/wholesale', icon: Building2 },
     { name: 'About Us', path: '/about', icon: Users },
   ];
 
