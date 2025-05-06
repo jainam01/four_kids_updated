@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -98,7 +99,7 @@ const FeaturedCollection = () => {
           {products?.slice(0, 8).map((product) => (
             <div 
               key={product.id}
-              className="group relative bg-white rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md"
+              className="group relative bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg"
               onClick={() => navigate(`/product/${product.slug}`)}
             >
               <div className="relative">
@@ -113,58 +114,48 @@ const FeaturedCollection = () => {
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="absolute top-2 right-2 z-10 bg-white shadow-md hover:bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-2 right-2 z-10 bg-white/80 hover:bg-white"
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/product/${product.slug}`);
+                    handleToggleWatchlist(product);
                   }}
                 >
-                  <Eye className="h-4 w-4 mr-1" />
-                  Quick view
+                  <Heart className={`h-4 w-4 ${isInWatchlist(product.id) ? 'fill-primary text-primary' : ''}`} />
                 </Button>
 
                 <img 
                   src={product.images[0]} 
                   alt={product.name}
-                  className="w-full aspect-[3/4] object-cover"
+                  className="w-full aspect-[3/4] object-cover transform transition-transform duration-500 group-hover:scale-105"
                 />
 
-                <div className="absolute bottom-0 left-0 right-0 bg-white/90 p-4 translate-y-full group-hover:translate-y-0 transition-transform">
-                  <div className="flex gap-2 mb-3 justify-center">
-                    {product.sizes.map(size => (
-                      <div key={size} className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-sm">
-                        {size}
-                      </div>
-                    ))}
-                  </div>
-
+                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="flex gap-2">
                     <Button
-                      className="flex-1 h-9"
+                      className="flex-1"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleAddToCart(product);
                       }}
                     >
-                      <ShoppingCart className="h-4 w-4 mr-1" />
-                      Quick Add
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      Add to Cart
                     </Button>
                     <Button
-                      variant="outline"
-                      className="h-9 px-3"
+                      variant="secondary"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleToggleWatchlist(product);
+                        navigate(`/product/${product.slug}`);
                       }}
                     >
-                      <Heart className={`h-4 w-4 ${isInWatchlist(product.id) ? 'fill-primary text-primary' : ''}`} />
+                      <Eye className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
               </div>
 
               <div className="p-4">
-                <h3 className="font-medium text-base mb-1">{product.name}</h3>
+                <h3 className="font-medium text-lg mb-1 truncate">{product.name}</h3>
                 <div className="flex items-baseline gap-2">
                   {product.salePrice ? (
                     <>
