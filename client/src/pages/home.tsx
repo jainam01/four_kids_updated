@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import SearchBar from "@/components/SearchBar";
 import CategorySelection from "@/components/CategorySelection";
 import FeaturedCollection from "@/components/FeaturedCollection";
-import Newsletter from "@/components/Newsletter";
+import WholesaleCTA from "@/components/WholesaleCTA";
 import OffersBanner from "@/components/OffersBanner";
 
 const Home = () => {
@@ -19,7 +19,7 @@ const Home = () => {
         <OffersBanner />
         <CategorySelection />
         <FeaturedCollection />
-        <Newsletter />
+        <WholesaleCTA />
       </div>
     </>
   );
