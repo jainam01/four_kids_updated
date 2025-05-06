@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +9,21 @@ import { BadgeColored } from "@/components/ui/badge-colored";
 import { useCart } from "@/context/CartContext";
 import { useWatchlist } from "@/context/WatchlistContext";
 import { useToast } from "@/hooks/use-toast";
+
+// Placeholder Newsletter component
+const Newsletter = () => (
+  <section className="py-20 bg-gray-100">
+    <div className="container mx-auto px-4 text-center">
+      <h2 className="text-3xl md:text-4xl font-bold mb-4">Subscribe to Our Newsletter</h2>
+      <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Stay updated on new arrivals and promotions.</p>
+      <form>
+        <input type="email" placeholder="Enter your email" className="p-2 border rounded" />
+        <Button type="submit">Subscribe</Button>
+      </form>
+    </div>
+  </section>
+);
+
 
 const FeaturedCollection = () => {
   const [, navigate] = useLocation();
@@ -88,6 +102,7 @@ const FeaturedCollection = () => {
                 <div
                   key={product.id}
                   className="rounded-lg border bg-card text-card-foreground group overflow-hidden h-full border-none shadow-sm hover:shadow-md transition-all duration-300 relative"
+                  style={{ backgroundColor: '#f0f0f0' }} // Added background color to improve visibility
                 >
                   <div className="relative h-60 overflow-hidden">
                     <a href={`/product/${product.slug}`}>
@@ -168,12 +183,82 @@ const FeaturedCollection = () => {
           <TabsContent value="new" className="space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {products?.filter(p => p.isNew).slice(0, 8).map((product) => (
-                // Same product card component as above
                 <div
                   key={product.id}
                   className="rounded-lg border bg-card text-card-foreground group overflow-hidden h-full border-none shadow-sm hover:shadow-md transition-all duration-300 relative"
+                  style={{ backgroundColor: '#f0f0f0' }} // Added background color to improve visibility
                 >
-                  {/* Same content as above product card */}
+                  <div className="relative h-60 overflow-hidden">
+                    <a href={`/product/${product.slug}`}>
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </a>
+                    {product.salePrice && (
+                      <div className="absolute top-2 left-2 flex flex-col gap-2">
+                        <BadgeColored variant="error">
+                          {Math.round((1 - product.salePrice / product.price) * 100)}% off
+                        </BadgeColored>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <div className="flex gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        <Button
+                          variant="secondary"
+                          size="icon"
+                          className="h-10 w-10 rounded-full bg-white hover:bg-primary hover:text-white"
+                          onClick={() => handleToggleWatchlist(product)}
+                          title="Add to Wishlist"
+                        >
+                          <Heart className={`h-4 w-4 ${isInWatchlist(product.id) ? 'fill-primary text-primary' : ''}`} />
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="icon"
+                          className="h-10 w-10 rounded-full bg-white hover:bg-primary hover:text-white"
+                          onClick={() => handleAddToCart(product)}
+                          title="Add to Basket"
+                        >
+                          <ShoppingBag className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="icon"
+                          className="h-10 w-10 rounded-full bg-white hover:bg-primary hover:text-white"
+                          onClick={() => navigate(`/product/${product.slug}`)}
+                          title="View Product"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4">
+                    {product.categoryId && (
+                      <span className="text-xs text-gray-500 hover:text-primary transition-colors mb-1 inline-block">
+                        {product.categoryId}
+                      </span>
+                    )}
+                    <a href={`/product/${product.slug}`} className="block">
+                      <h3 className="font-medium text-lg mb-2 hover:text-primary transition-colors line-clamp-2 h-[56px]">
+                        {product.name}
+                      </h3>
+                    </a>
+                    <div className="flex items-center">
+                      {product.salePrice ? (
+                        <>
+                          <span className="font-bold text-lg">₹{product.salePrice}</span>
+                          <span className="text-gray-400 line-through ml-2">₹{product.price}</span>
+                        </>
+                      ) : (
+                        <span className="font-bold text-lg">₹{product.price}</span>
+                      )}
+                    </div>
+                    <div className="mt-2 text-xs text-gray-500">MOQ: {product.moq} pcs</div>
+                  </div>
                 </div>
               ))}
             </div>
