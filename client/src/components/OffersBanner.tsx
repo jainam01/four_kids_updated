@@ -75,6 +75,25 @@ const OffersBanner = () => {
           ))}
         </div>
       </div>
+
+      <div className="w-full bg-gray-50 py-3 my-5">
+        <div className="container mx-auto px-4 md:px-20">
+          <div className="flex flex-col md:flex-row items-center justify-center">
+            <div className="flex items-center justify-center py-2 px-4 md:border-r border-gray-200 flex-1 text-center">
+              <span className="mr-2">🐅</span>
+              <span className="font-bold text-gray-800">MADE IN INDIA</span>
+            </div>
+            <div className="flex items-center justify-center py-2 px-4 md:border-r border-gray-200 flex-1 text-center">
+              <span className="mr-2">✓</span>
+              <span className="font-bold text-gray-800">ASSURED QUALITY</span>
+            </div>
+            <div className="flex items-center justify-center py-2 px-4 flex-1 text-center">
+              <span className="mr-2">📺</span>
+              <span className="font-bold text-gray-800">TRENDY DESIGNS</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
