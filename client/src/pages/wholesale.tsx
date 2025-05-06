@@ -1,21 +1,32 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from '@/components/ui/tabs';
-import { 
-  CheckCircle2, 
-  ShieldCheck, 
-  Truck, 
-  Briefcase,
-  Building2
-} from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/hooks/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Building2, Calculator, CheckCircle2, FileText, Package, Truck } from "lucide-react";
+
+const benefits = [
+  {
+    icon: CheckCircle2,
+    title: "Competitive Pricing",
+    description: "Access wholesale rates with volume-based discounts to maximize your profit margins."
+  },
+  {
+    icon: Package,
+    title: "Quality Products",
+    description: "Premium quality children's clothing with rigorous quality control standards."
+  },
+  {
+    icon: Truck,
+    title: "Fast Shipping",
+    description: "Quick nationwide delivery with free shipping on orders above ₹10,000."
+  },
+  {
+    icon: FileText,
+    title: "Exclusive Access",
+    description: "Early access to new collections and seasonal lookbooks."
+  }
+];
 
 const Wholesale = () => {
   const { toast } = useToast();
@@ -30,14 +41,10 @@ const Wholesale = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Here you would typically send the data to your API
     toast({
       title: "Wholesale application submitted",
       description: "Our team will review your application and contact you soon.",
     });
-    
-    // Reset form
     setBusinessName('');
     setContactName('');
     setEmail('');
@@ -48,336 +55,176 @@ const Wholesale = () => {
     setTaxId('');
   };
 
-  const benefits = [
-    {
-      icon: CheckCircle2,
-      title: "Competitive Pricing",
-      description: "Access to our full product range at competitive wholesale prices"
-    },
-    {
-      icon: ShieldCheck,
-      title: "Quality Guarantee",
-      description: "All products undergo rigorous quality testing before shipping"
-    },
-    {
-      icon: Truck,
-      title: "Fast Shipping",
-      description: "Quick turnaround times with reliable shipping options"
-    },
-    {
-      icon: Briefcase,
-      title: "Dedicated Support",
-      description: "Personal account manager for all your wholesale needs"
-    }
-  ];
-
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold mb-2">FourKids Wholesale Program</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Partner with us to bring high-quality children's clothing to your customers.
-            Our wholesale program offers competitive pricing, reliable fulfillment, and exceptional support.
-          </p>
+    <main className="flex-grow">
+      <div className="relative py-16 px-4 bg-cover bg-center bg-no-repeat" 
+        style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/placeholder.svg")' }}>
+        <div className="container mx-auto text-center text-white z-10 relative">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">Wholesale Program</h1>
+          <nav aria-label="Breadcrumb">
+            <ol className="flex justify-center items-center space-x-2">
+              <li>
+                <a className="hover:text-primary transition-colors flex items-center" href="/">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-house h-4 w-4 mr-1">
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  </svg>
+                  Home
+                </a>
+              </li>
+              <li className="flex items-center">
+                <ArrowRight className="h-4 w-4 mx-2 text-gray-300" />
+                <span className="text-primary">Wholesale</span>
+              </li>
+            </ol>
+          </nav>
         </div>
+      </div>
 
-        <Tabs defaultValue="overview" className="mb-12">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="overview">Program Overview</TabsTrigger>
-            <TabsTrigger value="benefits">Benefits</TabsTrigger>
-            <TabsTrigger value="apply">Apply Now</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="overview" className="p-6 border rounded-md mt-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h2 className="text-2xl font-bold mb-4">About Our Wholesale Program</h2>
-                <p className="text-gray-600 mb-4">
-                  FourKids offers a comprehensive wholesale program designed specifically for retailers, 
-                  boutiques, and online stores looking to expand their children's clothing offerings.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  Our collections feature high-quality, durable garments for kids aged 5-15, all designed 
-                  and made in the USA with an emphasis on ethical manufacturing and sustainability.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  With minimum order quantities starting at just $500, we make it easy for businesses of 
-                  all sizes to access our popular product lines.
-                </p>
-                
-                <div className="mt-6">
-                  <h3 className="text-lg font-bold mb-2">Key Program Features</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <CheckCircle2 className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                      <span className="text-gray-600">No long-term contracts or exclusivity requirements</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle2 className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                      <span className="text-gray-600">Seasonal pre-order discounts for better margins</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle2 className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                      <span className="text-gray-600">Dropshipping options available for online retailers</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle2 className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                      <span className="text-gray-600">Marketing support and product training</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                <h3 className="text-lg font-bold mb-4">Wholesale Requirements</h3>
-                <ul className="space-y-4">
-                  <li className="pb-4 border-b border-gray-200">
-                    <span className="font-medium block mb-1">Valid Business License</span>
-                    <span className="text-sm text-gray-600">A current business license and tax ID are required</span>
-                  </li>
-                  <li className="pb-4 border-b border-gray-200">
-                    <span className="font-medium block mb-1">Minimum Order</span>
-                    <span className="text-sm text-gray-600">$500 minimum for initial orders, $300 for reorders</span>
-                  </li>
-                  <li className="pb-4 border-b border-gray-200">
-                    <span className="font-medium block mb-1">Brand Representation</span>
-                    <span className="text-sm text-gray-600">Commitment to properly represent the FourKids brand</span>
-                  </li>
-                  <li>
-                    <span className="font-medium block mb-1">Payment Terms</span>
-                    <span className="text-sm text-gray-600">Net 30 terms available for established accounts</span>
-                  </li>
-                </ul>
-                
-                <div className="mt-6 p-4 bg-primary/5 rounded-md">
-                  <p className="text-sm text-gray-700">
-                    Ready to get started? Click on the "Apply Now" tab to submit your application 
-                    or contact our wholesale team directly at 
-                    <a href="mailto:wholesale@fourkids.com" className="text-primary font-medium"> wholesale@fourkids.com</a>
-                  </p>
-                </div>
-              </div>
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Partner with FouKids</h2>
+            <p className="text-gray-600 mb-6 max-w-3xl mx-auto">
+              Join our network of retailers and resellers to access premium quality children's clothing at competitive wholesale prices. 
+              We offer flexible terms, reliable shipping, and exceptional product support.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button variant="default" size="lg" asChild>
+                <a href="/contact">Become a Partner</a>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <a href="/products">View Product Catalog</a>
+              </Button>
             </div>
-          </TabsContent>
-          
-          <TabsContent value="benefits" className="p-6 border rounded-md mt-2">
-            <h2 className="text-2xl font-bold mb-6 text-center">Wholesale Partner Benefits</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          </div>
+
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold mb-8 text-center">Wholesale Benefits</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {benefits.map((benefit, index) => {
                 const Icon = benefit.icon;
                 return (
-                  <div key={index} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
-                    <div className="mb-4 bg-primary/10 inline-flex p-3 rounded-full">
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
                       <Icon className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="text-lg font-bold mb-2">{benefit.title}</h3>
-                    <p className="text-gray-600 text-sm">{benefit.description}</p>
+                    <div>
+                      <h4 className="text-lg font-semibold mb-2">{benefit.title}</h4>
+                      <p className="text-gray-600">{benefit.description}</p>
+                    </div>
                   </div>
                 );
               })}
             </div>
-            
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 mb-8">
-              <h3 className="text-xl font-bold mb-4">Pricing Structure</h3>
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead>
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Order Volume
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Discount
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Payment Terms
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">$500 - $1,000</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">30% off MSRP</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Prepayment required</td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">$1,001 - $5,000</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">35% off MSRP</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Net 15</td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">$5,001 - $10,000</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">40% off MSRP</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Net 30</td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">$10,001+</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">45% off MSRP</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Net 30</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </div>
+
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold mb-8 text-center">How It Works</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { number: 1, title: "Register", desc: "Fill out our wholesale application form with your business details." },
+                { number: 2, title: "Approval", desc: "Our team reviews your application and provides access to wholesale pricing." },
+                { number: 3, title: "Order", desc: "Place your wholesale orders through our dedicated B2B portal." }
+              ].map((step) => (
+                <div key={step.number} className="rounded-lg border bg-card text-card-foreground shadow-sm">
+                  <div className="flex flex-col space-y-1.5 p-6 text-center pb-2">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                      <span className="text-primary font-bold text-xl">{step.number}</span>
+                    </div>
+                    <h3 className="font-semibold tracking-tight text-xl">{step.title}</h3>
+                  </div>
+                  <div className="p-6 pt-0">
+                    <p className="text-gray-600 text-center">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            
+          </div>
+
+          <div className="mb-16">
+            <Tabs defaultValue="pricing">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="pricing">Pricing</TabsTrigger>
+                <TabsTrigger value="minimums">Order Minimums</TabsTrigger>
+                <TabsTrigger value="shipping">Shipping & Terms</TabsTrigger>
+              </TabsList>
+              <TabsContent value="pricing" className="bg-white p-6 border rounded-b-md shadow-sm">
+                <h4 className="text-lg font-semibold mb-4">Wholesale Pricing Structure</h4>
+                <p className="mb-4">Our wholesale prices offer significant discounts off retail prices:</p>
+                <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-600">
+                  <li>Standard Wholesale: 30-40% off retail prices</li>
+                  <li>Volume Discount: Additional 5% on orders above ₹25,000</li>
+                  <li>Loyalty Discount: Additional 3% for regular partners (after 3+ orders)</li>
+                </ul>
+                <p>Exact pricing is available after wholesale account approval.</p>
+              </TabsContent>
+              <TabsContent value="minimums" className="bg-white p-6 border rounded-b-md shadow-sm">
+                <h4 className="text-lg font-semibold mb-4">Minimum Order Requirements</h4>
+                <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-600">
+                  <li>Initial Order: ₹10,000 minimum</li>
+                  <li>Reorder Minimum: ₹5,000</li>
+                  <li>Category Minimum: 6 pieces per style/color</li>
+                </ul>
+              </TabsContent>
+              <TabsContent value="shipping" className="bg-white p-6 border rounded-b-md shadow-sm">
+                <h4 className="text-lg font-semibold mb-4">Shipping & Payment Terms</h4>
+                <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-600">
+                  <li>Free shipping on orders above ₹10,000</li>
+                  <li>2-5 business days delivery nationwide</li>
+                  <li>Payment terms: 50% advance, 50% before dispatch</li>
+                  <li>Returns accepted for manufacturing defects</li>
+                </ul>
+              </TabsContent>
+            </Tabs>
+          </div>
+
+          <div className="bg-gray-50 p-8 rounded-lg mb-12">
+            <div className="flex items-center gap-3 mb-4">
+              <Calculator className="h-6 w-6 text-primary" />
+              <h3 className="text-xl font-bold">Profit Calculator</h3>
+            </div>
+            <p className="text-gray-600 mb-6">
+              Use our simple calculator to estimate your potential profits when reselling FouKids products.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              {[
+                { name: "Basic Pants", wholesale: "149", retail: "249", margin: "40" },
+                { name: "Cargo Pants", wholesale: "199", retail: "349", margin: "43" },
+                { name: "Mom Fit", wholesale: "229", retail: "399", margin: "43" }
+              ].map((product) => (
+                <div key={product.name} className="rounded-lg border bg-card text-card-foreground shadow-sm">
+                  <div className="flex flex-col space-y-1.5 p-6 pb-2">
+                    <h3 className="font-semibold tracking-tight text-lg">{product.name}</h3>
+                    <p className="text-sm text-muted-foreground">Average wholesale price</p>
+                  </div>
+                  <div className="p-6 pt-0">
+                    <div className="text-2xl font-bold">₹{product.wholesale}</div>
+                    <p className="text-sm text-gray-500">Suggested retail: ₹{product.retail}</p>
+                    <div className="mt-2 text-sm text-green-600">~{product.margin}% Margin</div>
+                  </div>
+                </div>
+              ))}
+            </div>
             <div className="text-center">
-              <Button 
-                onClick={() => {
-                  // Find the apply tab and click it
-                  const applyTab = document.querySelector('[data-value="apply"]') as HTMLElement;
-                  if (applyTab) applyTab.click();
-                }}
-                className="bg-primary hover:bg-primary/90 text-white font-medium py-2.5 px-8 rounded-md"
-              >
-                Apply Now
+              <Button>
+                <a href="/contact">Request Full Price List</a>
               </Button>
             </div>
-          </TabsContent>
-          
-          <TabsContent value="apply" className="p-6 border rounded-md mt-2">
-            <div className="max-w-2xl mx-auto">
-              <h2 className="text-2xl font-bold mb-4 text-center">Wholesale Application</h2>
-              <p className="text-gray-600 mb-6 text-center">
-                Complete the form below to apply for our wholesale program. Our team will review your 
-                application and contact you within 2 business days.
-              </p>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="businessName" className="block text-sm font-medium text-gray-700 mb-1">
-                    Business Name*
-                  </label>
-                  <Input
-                    id="businessName"
-                    value={businessName}
-                    onChange={(e) => setBusinessName(e.target.value)}
-                    required
-                    className="w-full"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="contactName" className="block text-sm font-medium text-gray-700 mb-1">
-                    Contact Name*
-                  </label>
-                  <Input
-                    id="contactName"
-                    value={contactName}
-                    onChange={(e) => setContactName(e.target.value)}
-                    required
-                    className="w-full"
-                  />
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email Address*
-                    </label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number*
-                    </label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-                    Business Address*
-                  </label>
-                  <Textarea
-                    id="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                    className="w-full"
-                  />
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="businessType" className="block text-sm font-medium text-gray-700 mb-1">
-                      Business Type*
-                    </label>
-                    <Input
-                      id="businessType"
-                      value={businessType}
-                      onChange={(e) => setBusinessType(e.target.value)}
-                      placeholder="Retail Store, Online Shop, etc."
-                      required
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="taxId" className="block text-sm font-medium text-gray-700 mb-1">
-                      Tax ID / Business License*
-                    </label>
-                    <Input
-                      id="taxId"
-                      value={taxId}
-                      onChange={(e) => setTaxId(e.target.value)}
-                      required
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                    Additional Information
-                  </label>
-                  <Textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Tell us about your business, target customers, and which product lines you're interested in."
-                    className="w-full min-h-[100px]"
-                  />
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm text-gray-600">
-                  <div className="flex items-start">
-                    <Building2 className="h-5 w-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
-                    <p>
-                      By submitting this application, you agree to the terms of our wholesale program. 
-                      We'll review your application and contact you within 2 business days.
-                    </p>
-                  </div>
-                </div>
-                
-                <Button 
-                  type="submit" 
-                  className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3"
-                >
-                  Submit Application
-                </Button>
-              </form>
-            </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+
+          <div className="text-center">
+            <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Join our wholesale program today and start offering high-quality children's clothing to your customers.
+            </p>
+            <Button size="lg">
+              <a href="/contact">Apply for Wholesale Account</a>
+            </Button>
+          </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 
