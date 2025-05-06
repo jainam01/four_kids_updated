@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
@@ -7,54 +7,59 @@ const HeroSection = () => {
   const [, navigate] = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-  
+
   const heroSlides = [
     {
       title: "BREEZE '25",
       description: "Light, Airy, Effortlessly Chic",
-      image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image:
+        "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       bgColor: "#e8f4f2",
-      link: "/category/new-arrivals"
+      link: "/category/new-arrivals",
     },
     {
       title: "STYLISH BASICS",
       description: "Quality Essentials for Every Child",
-      image: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image:
+        "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       bgColor: "#f5f0e6",
-      link: "/category/pants"
+      link: "/category/pants",
     },
     {
       title: "SUMMER VIBES",
       description: "Colorful, Comfortable, Cool",
-      image: "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image:
+        "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       bgColor: "#f6e8e8",
-      link: "/category/shorts"
-    }
+      link: "/category/shorts",
+    },
   ];
-  
+
   useEffect(() => {
     // Auto-slide every 5 seconds
     const interval = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % heroSlides.length);
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, [heroSlides.length]);
-  
+
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
-  
+
   const goToPrevSlide = () => {
-    setCurrentSlide(prev => (prev - 1 + heroSlides.length) % heroSlides.length);
+    setCurrentSlide(
+      (prev) => (prev - 1 + heroSlides.length) % heroSlides.length,
+    );
   };
-  
+
   const goToNextSlide = () => {
-    setCurrentSlide(prev => (prev + 1) % heroSlides.length);
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   };
-  
+
   const currentHero = heroSlides[currentSlide];
-  
+
   return (
     <div>
       {/* Top Banner - Style 1 */}
@@ -62,22 +67,47 @@ const HeroSection = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-center items-center py-3 text-center">
             <div className="flex-1 pb-3 md:pb-0">
-              <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-1 text-[#232323] uppercase">FREE SHIPPING ACROSS USA</p>
-              <p className="text-base md:text-base text-xs leading-[22px] text-[#3c3c3c] mb-0">Enjoy free shipping on all orders</p>
+              <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-1 text-[#232323] uppercase">
+                FREE SHIPPING ACROSS INDIA
+              </p>
+              <p className="text-base md:text-base text-xs leading-[22px] text-[#3c3c3c] mb-0">
+                Enjoy free shipping on all orders
+              </p>
             </div>
             <div className="hidden md:block w-px h-14 bg-[#232323]/20 mx-8"></div>
             <div className="flex-1">
-              <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-1 text-[#232323] uppercase">UNBEATABLE INTERNATIONAL PRICE</p>
-              <p className="text-base md:text-base text-xs leading-[22px] text-[#3c3c3c] mb-0">Shop trendy picks at best lowest prices!</p>
+              <p className="text-2xl md:text-2xl text-base font-bold mb-0 md:mb-1 text-[#232323] uppercase">
+                UNBEATABLE INTERNATIONAL PRICE
+              </p>
+              <p className="text-base md:text-base text-xs leading-[22px] text-[#3c3c3c] mb-0">
+                Shop trendy picks at best lowest prices!
+              </p>
             </div>
           </div>
         </div>
       </div>
-      
 
+      <div className="w-full bg-gray-50 py-3 my-5">
+        <div className="container mx-auto px-4 md:px-20">
+          <div className="flex flex-col md:flex-row items-center justify-center">
+            <div className="flex items-center justify-center py-2 px-4 md:border-r border-gray-200 flex-1 text-center">
+              <span className="mr-2">🐅</span>
+              <span className="font-bold text-gray-800">MADE IN INDIA</span>
+            </div>
+            <div className="flex items-center justify-center py-2 px-4 md:border-r border-gray-200 flex-1 text-center">
+              <span className="mr-2">✓</span>
+              <span className="font-bold text-gray-800">ASSURED QUALITY</span>
+            </div>
+            <div className="flex items-center justify-center py-2 px-4 flex-1 text-center">
+              <span className="mr-2">📺</span>
+              <span className="font-bold text-gray-800">TRENDY DESIGNS</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Main Hero Section with Carousel */}
-      <section 
+      <section
         className="relative overflow-hidden mx-2.5 mt-4 rounded-xl transition-all duration-500"
         style={{ backgroundColor: currentHero.bgColor }}
       >
@@ -88,11 +118,11 @@ const HeroSection = () => {
                 <h2 className="text-4xl md:text-6xl font-bold mb-2 text-gray-800">
                   {currentHero.title}
                 </h2>
-                
+
                 <p className="text-gray-600 mb-8 text-lg">
                   {currentHero.description}
                 </p>
-                
+
                 <div className="flex flex-wrap">
                   <Button
                     onClick={() => navigate(currentHero.link)}
@@ -102,7 +132,7 @@ const HeroSection = () => {
                     <ShoppingBag className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
-                
+
                 {/* Carousel Controls */}
                 <div className="mt-8 flex items-center">
                   <div className="flex space-x-2 mr-4">
@@ -111,22 +141,24 @@ const HeroSection = () => {
                         key={index}
                         onClick={() => goToSlide(index)}
                         className={`w-2 h-2 rounded-full transition-all ${
-                          currentSlide === index ? 'bg-black w-6' : 'bg-gray-400'
+                          currentSlide === index
+                            ? "bg-black w-6"
+                            : "bg-gray-400"
                         }`}
                         aria-label={`Go to slide ${index + 1}`}
                       />
                     ))}
                   </div>
-                  
+
                   <div className="flex space-x-2">
-                    <button 
+                    <button
                       onClick={goToPrevSlide}
                       className="p-1 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors"
                       aria-label="Previous slide"
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </button>
-                    <button 
+                    <button
                       onClick={goToNextSlide}
                       className="p-1 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors"
                       aria-label="Next slide"
@@ -136,20 +168,20 @@ const HeroSection = () => {
                   </div>
                 </div>
               </div>
-              
-              <div 
+
+              <div
                 className="order-1 md:order-2 relative h-[400px] md:h-[600px] overflow-hidden"
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
               >
-                <img 
+                <img
                   key={currentSlide}
                   src={currentHero.image}
-                  alt={currentHero.title} 
+                  alt={currentHero.title}
                   className="w-full h-full object-cover transition-all duration-700 ease-in-out transform scale-105 hover:scale-100"
                   style={{
                     opacity: 1,
-                    transform: `scale(${isHovering ? '1' : '1.05'})`,
+                    transform: `scale(${isHovering ? "1" : "1.05"})`,
                   }}
                 />
               </div>
