@@ -138,12 +138,11 @@ const FeaturedCollection = () => {
                   </div>
 
                   <div className="p-4">
-                    <a
-                      className="text-xs text-gray-500 hover:text-primary transition-colors mb-1 inline-block"
-                      href={`/category/${product.category.slug}`}
-                    >
-                      {product.category.name}
-                    </a>
+                    {product.categoryId && (
+                      <span className="text-xs text-gray-500 hover:text-primary transition-colors mb-1 inline-block">
+                        {product.categoryId}
+                      </span>
+                    )}
                     <a href={`/product/${product.slug}`} className="block">
                       <h3 className="font-medium text-lg mb-2 hover:text-primary transition-colors line-clamp-2 h-[56px]">
                         {product.name}
