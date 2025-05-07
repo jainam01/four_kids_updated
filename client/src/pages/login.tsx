@@ -1,51 +1,54 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { useLocation } from "wouter";
 import { Helmet } from "react-helmet";
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerClose,
+} from "@/components/ui/drawer";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Lock, User, UserPlus, ArrowRight } from "lucide-react";
+import { Mail, Lock, User, UserPlus, ArrowRight, X } from "lucide-react";
 
-const Login = () => {
+const Login = ({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) => {
   const [, navigate] = useLocation();
   const { toast } = useToast();
-  
-  // Login state
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  
-  // Register state
-  const [registerEmail, setRegisterEmail] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
-  
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Here you would typically authenticate with your API
     toast({
       title: "Login successful",
       description: "Welcome back to FourKids!",
     });
-    
-    // Navigate to home page on successful login
-    navigate('/');
+    navigate("/");
+    onOpenChange(false); // Close drawer
   };
-  
+
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (registerPassword !== confirmPassword) {
       toast({
         title: "Passwords don't match",
@@ -54,7 +57,7 @@ const Login = () => {
       });
       return;
     }
-    
+
     if (!agreeTerms) {
       toast({
         title: "Terms agreement required",
@@ -63,41 +66,47 @@ const Login = () => {
       });
       return;
     }
-    
-    // Here you would typically register with your API
+
     toast({
       title: "Registration successful",
       description: "Your account has been created successfully!",
     });
-    
-    // Navigate to home page on successful registration
-    navigate('/');
+
+    navigate("/");
+    onOpenChange(false); // Close drawer
   };
-  
+
   return (
-    <div className="container mx-auto px-4 py-12">
+    <Drawer open={open} onOpenChange={onOpenChange} direction="right">
       <Helmet>
         <title>Login / Register - FourKids</title>
       </Helmet>
-      
-      <div className="max-w-md mx-auto">
-        <Tabs defaultValue="login" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="login" className="text-sm">
-              <User className="h-4 w-4 mr-2" />
-              Login
-            </TabsTrigger>
-            <TabsTrigger value="register" className="text-sm">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Register
-            </TabsTrigger>
-          </TabsList>
-          
-          {/* Login Form */}
-          <TabsContent value="login">
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-              <h1 className="text-2xl font-bold mb-6">Welcome Back</h1>
-              
+
+      <DrawerContent className="max-w-md ml-auto h-full rounded-l-lg shadow-lg p-0">
+        <DrawerHeader className="flex justify-between items-center border-b px-6 py-4">
+          <DrawerTitle className="text-2xl font-bold">Login</DrawerTitle>
+          <DrawerClose asChild>
+            <button className="hover:bg-accent h-10 w-10 rounded-md flex items-center justify-center">
+              <X className="h-6 w-6" />
+            </button>
+          </DrawerClose>
+        </DrawerHeader>
+
+        <div className="overflow-auto p-6">
+          <Tabs defaultValue="login" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="login">
+                <User className="h-4 w-4 mr-2" />
+                Login
+              </TabsTrigger>
+              <TabsTrigger value="register">
+                <UserPlus className="h-4 w-4 mr-2" />
+                Register
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Login Form */}
+            <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="email">Email Address</Label>
@@ -114,12 +123,12 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <Label htmlFor="password">Password</Label>
-                    <a 
-                      href="/forgot-password" 
+                    <a
+                      href="/forgot-password"
                       className="text-xs text-primary hover:underline"
                     >
                       Forgot password?
@@ -138,48 +147,45 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="remember"
                     checked={rememberMe}
-                    onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                    onCheckedChange={(checked) =>
+                      setRememberMe(checked as boolean)
+                    }
                   />
-                  <label
-                    htmlFor="remember"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
+                  <label htmlFor="remember" className="text-sm">
                     Remember me
                   </label>
                 </div>
-                
+
                 <Button type="submit" className="w-full">
                   Sign in
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                
+
                 <div className="mt-4 text-center text-sm text-gray-500">
-                  Don't have an account?{" "}
-                  <button 
+                  Don’t have an account?{" "}
+                  <button
                     type="button"
                     onClick={() => {
-                      const element = document.querySelector('[value="register"]') as HTMLElement;
-                      if (element) element.click();
-                    }} 
+                      const element = document.querySelector(
+                        '[value="register"]',
+                      ) as HTMLElement;
+                      element?.click();
+                    }}
                     className="text-primary hover:underline"
                   >
                     Register now
                   </button>
                 </div>
               </form>
-            </div>
-          </TabsContent>
-          
-          {/* Register Form */}
-          <TabsContent value="register">
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-              <h1 className="text-2xl font-bold mb-6">Create Account</h1>
-              
+            </TabsContent>
+
+            {/* Register Form */}
+            <TabsContent value="register">
               <form onSubmit={handleRegister} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="fullName">Full Name</Label>
@@ -195,7 +201,7 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="registerEmail">Email Address</Label>
                   <div className="relative">
@@ -211,7 +217,7 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="registerPassword">Password</Label>
                   <div className="relative">
@@ -227,7 +233,7 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
                   <div className="relative">
@@ -243,48 +249,49 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="terms"
                     checked={agreeTerms}
-                    onCheckedChange={(checked) => setAgreeTerms(checked as boolean)}
+                    onCheckedChange={(checked) =>
+                      setAgreeTerms(checked as boolean)
+                    }
                   />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
+                  <label htmlFor="terms" className="text-sm">
                     I agree to the{" "}
                     <a href="/terms" className="text-primary hover:underline">
                       terms and conditions
                     </a>
                   </label>
                 </div>
-                
+
                 <Button type="submit" className="w-full">
                   Create Account
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                
+
                 <div className="mt-4 text-center text-sm text-gray-500">
                   Already have an account?{" "}
-                  <button 
+                  <button
                     type="button"
                     onClick={() => {
-                      const element = document.querySelector('[value="login"]') as HTMLElement;
-                      if (element) element.click();
-                    }} 
+                      const element = document.querySelector(
+                        '[value="login"]',
+                      ) as HTMLElement;
+                      element?.click();
+                    }}
                     className="text-primary hover:underline"
                   >
                     Sign in
                   </button>
                 </div>
               </form>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </DrawerContent>
+    </Drawer>
   );
 };
 
