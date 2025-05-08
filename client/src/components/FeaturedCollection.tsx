@@ -144,7 +144,9 @@ const FeaturedCollection = () => {
             <span className="font-bold text-lg">₹{product.price}</span>
           )}
         </div>
-        <div className="mt-2 text-xs text-gray-500">MOQ: {product.minimumOrderQuantity} pcs</div>
+        <div className="mt-2 text-xs text-gray-500">
+          Min. Order: {product.minimumOrderQuantity || 1} pcs
+        </div>
       </div>
     </div>
   );

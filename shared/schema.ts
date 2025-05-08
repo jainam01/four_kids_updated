@@ -39,6 +39,7 @@ export const products = pgTable("products", {
   isNew: boolean("is_new").default(false),
   isFeatured: boolean("is_featured").default(false),
   isOnSale: boolean("is_on_sale").default(false),
+  minimumOrderQuantity: integer("minimum_order_quantity").default(1).notNull(),
 });
 
 // Cart model
