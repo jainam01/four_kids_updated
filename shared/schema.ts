@@ -1,4 +1,12 @@
-import { pgTable, text, serial, integer, boolean, doublePrecision, json } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  serial,
+  integer,
+  boolean,
+  doublePrecision,
+  json,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -39,7 +47,7 @@ export const products = pgTable("products", {
   isNew: boolean("is_new").default(false),
   isFeatured: boolean("is_featured").default(false),
   isOnSale: boolean("is_on_sale").default(false),
-  minimumOrderQuantity: integer("minimum_order_quantity").default(1).notNull(),
+  minimumOrderQuantity: integer("minimum_order_quantity").default(10).notNull(),
 });
 
 // Cart model

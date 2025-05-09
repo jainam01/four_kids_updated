@@ -90,7 +90,7 @@ const FeaturedCollection = () => {
             <Button
               variant="secondary"
               size="icon"
-              className="bg-white hover:bg-primary hover:text-white"
+              className="bg-black hover:bg-primary hover:text-white"
               onClick={() => handleToggleWatchlist(product)}
               title="Add to Wishlist"
             >
@@ -103,7 +103,7 @@ const FeaturedCollection = () => {
             <Button
               variant="secondary"
               size="icon"
-              className="bg-white hover:bg-primary hover:text-white"
+              className="bg-black hover:bg-primary hover:text-white"
               onClick={() => handleAddToCart(product)}
               title="Add to Basket"
             >
@@ -112,7 +112,7 @@ const FeaturedCollection = () => {
             <Button
               variant="secondary"
               size="icon"
-              className="bg-white hover:bg-primary hover:text-white"
+              className="bg-black hover:bg-primary hover:text-white"
               onClick={() => navigate(`/product/${product.slug}`)}
               title="View Product"
             >
