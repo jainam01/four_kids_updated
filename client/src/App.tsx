@@ -19,6 +19,7 @@ import MobileNavigation from "./components/MobileNavigation";
 import { ThemeProvider } from "next-themes";
 import { CartProvider } from "./context/CartContext";
 import { WatchlistProvider } from "./context/WatchlistContext";
+import Products from "@/pages/products";
 
 function Router() {
   return (
@@ -31,6 +32,7 @@ function Router() {
           <Route path="/cart" component={Cart} />
           <Route path="/watchlist" component={Watchlist} />
           <Route path="/category/:slug" component={Category} />
+          <Route path="/products" component={Products} />
           <Route path="/search" component={SearchResults} />
           <Route path="/support" component={Support} />
           <Route path="/admin" component={Admin} />
