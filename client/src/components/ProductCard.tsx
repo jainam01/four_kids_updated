@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { Product } from "@shared/schema";
-import { Heart, ShoppingCart, Eye } from "lucide-react";
+import { Heart, ShoppingCart, Eye, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/context/CartContext";
 import { useWatchlist } from "@/context/WatchlistContext";
 import { BadgeColored } from "@/components/ui/badge-colored";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 
 interface ProductCardProps {
   product: Product;
@@ -20,6 +22,9 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
   const { addToCart } = useCart();
   const { addToWatchlist, isInWatchlist, removeFromWatchlist } = useWatchlist();
   const [isHovering, setIsHovering] = useState(false);
+  const [showQuickView, setShowQuickView] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
 
   const inWatchlist = isInWatchlist(product.id);
 
@@ -101,7 +106,7 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
                 className="bg-white shadow-md hover:bg-gray-50"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/product/${product.slug}`);
+                  setShowQuickView(true);
                 }}
               >
                 <Eye className="h-4 w-4 mr-1" />
@@ -109,6 +114,101 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
               </Button>
             </div>
           )}
+
+          <Dialog open={showQuickView} onOpenChange={setShowQuickView}>
+            <DialogContent className="sm:max-w-2xl">
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="relative">
+                    <img 
+                      src={product.images[0]} 
+                      alt={product.name} 
+                      className="w-full rounded-lg"
+                    />
+                    {product.salePrice && (
+                      <div className="absolute top-2 left-2">
+                        <BadgeColored variant="error">
+                          {Math.round((1 - product.salePrice / product.price) * 100)}% off
+                        </BadgeColored>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col">
+                    <h3 className="text-lg font-semibold">{product.name}</h3>
+                    <div className="flex items-baseline gap-2 mt-2">
+                      {product.salePrice ? (
+                        <>
+                          <span className="text-primary font-semibold text-xl">₹{product.salePrice}</span>
+                          <span className="text-gray-400 line-through">₹{product.price}</span>
+                        </>
+                      ) : (
+                        <span className="text-primary font-semibold text-xl">₹{product.price}</span>
+                      )}
+                    </div>
+                    <p className="text-gray-600 mt-4">{product.description}</p>
+                    
+                    <Separator className="my-4" />
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-sm font-medium">Size:</label>
+                        <div className="flex gap-2 mt-2">
+                          {product.sizes.map(size => (
+                            <Button
+                              key={size}
+                              variant={selectedSize === size ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => setSelectedSize(size)}
+                            >
+                              {size}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label className="text-sm font-medium">Color:</label>
+                        <div className="flex gap-2 mt-2">
+                          {product.colors.map(color => (
+                            <Button
+                              key={color}
+                              variant={selectedColor === color ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => setSelectedColor(color)}
+                            >
+                              {color}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-2 mt-auto pt-4">
+                      <Button
+                        className="flex-1"
+                        onClick={() => {
+                          handleQuickAdd(new Event('click') as React.MouseEvent);
+                          setShowQuickView(false);
+                        }}
+                      >
+                        <ShoppingCart className="h-4 w-4 mr-2" />
+                        Add to Cart
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={(e) => {
+                          handleToggleWatchlist(e);
+                          setShowQuickView(false);
+                        }}
+                      >
+                        <Heart className={`h-4 w-4 ${inWatchlist ? 'fill-primary text-primary' : ''}`} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
 
           {/* Product Image */}
           <img 
