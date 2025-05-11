@@ -384,7 +384,7 @@ export class MemStorage implements IStorage {
     // Add products
     const products: InsertProduct[] = [
       {
-        name: "Denim Jacket",
+        name: "jainam Jacket",
         slug: "denim-jacket",
         description: "A classic denim jacket that never goes out of style. Perfect for layering in any season.",
         price: 34.99,

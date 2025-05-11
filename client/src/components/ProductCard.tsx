@@ -16,7 +16,11 @@ interface ProductCardProps {
   showHoverEffects?: boolean;
 }
 
-const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  viewMode = "grid",
+  showHoverEffects = true,
+}: ProductCardProps) => {
   const [, navigate] = useLocation();
   const { toast } = useToast();
   const { addToCart } = useCart();
@@ -40,7 +44,7 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
         productId: product.id,
         quantity: 1,
         size: selectedSize || product.sizes[0],
-        color: selectedColor || product.colors[0]
+        color: selectedColor || product.colors[0],
       });
 
       toast({
@@ -89,7 +93,7 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
 
   if (viewMode === "grid") {
     return (
-      <div 
+      <div
         className="relative bg-white rounded-lg overflow-hidden shadow-sm transition-all duration-300"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -125,19 +129,24 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
 
           <Dialog open={showQuickView} onOpenChange={setShowQuickView}>
             <DialogContent className="sm:max-w-2xl">
-              <h2 className="text-lg font-semibold mb-4" id="dialog-title">Quick View - {product.name}</h2>
+              <h2 className="text-lg font-semibold mb-4" id="dialog-title">
+                Quick View - {product.name}
+              </h2>
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="relative">
-                    <img 
-                      src={product.images[0]} 
-                      alt={product.name} 
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
                       className="w-full rounded-lg"
                     />
                     {product.salePrice && (
                       <div className="absolute top-2 left-2">
                         <BadgeColored variant="error">
-                          {Math.round((1 - product.salePrice / product.price) * 100)}% off
+                          {Math.round(
+                            (1 - product.salePrice / product.price) * 100,
+                          )}
+                          % off
                         </BadgeColored>
                       </div>
                     )}
@@ -147,25 +156,33 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
                     <div className="flex items-baseline gap-2 mt-2">
                       {product.salePrice ? (
                         <>
-                          <span className="text-primary font-semibold text-xl">₹{product.salePrice}</span>
-                          <span className="text-gray-400 line-through">₹{product.price}</span>
+                          <span className="text-primary font-semibold text-xl">
+                            ₹{product.salePrice}
+                          </span>
+                          <span className="text-gray-400 line-through">
+                            ₹{product.price}
+                          </span>
                         </>
                       ) : (
-                        <span className="text-primary font-semibold text-xl">₹{product.price}</span>
+                        <span className="text-primary font-semibold text-xl">
+                          ₹{product.price}
+                        </span>
                       )}
                     </div>
                     <p className="text-gray-600 mt-4">{product.description}</p>
-                    
+
                     <Separator className="my-4" />
-                    
+
                     <div className="space-y-4">
                       <div>
                         <label className="text-sm font-medium">Size:</label>
                         <div className="flex gap-2 mt-2">
-                          {product.sizes.map(size => (
+                          {product.sizes.map((size) => (
                             <Button
                               key={size}
-                              variant={selectedSize === size ? "default" : "outline"}
+                              variant={
+                                selectedSize === size ? "default" : "outline"
+                              }
                               size="sm"
                               onClick={() => setSelectedSize(size)}
                             >
@@ -174,14 +191,16 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
                           ))}
                         </div>
                       </div>
-                      
+
                       <div>
                         <label className="text-sm font-medium">Color:</label>
                         <div className="flex gap-2 mt-2">
-                          {product.colors.map(color => (
+                          {product.colors.map((color) => (
                             <Button
                               key={color}
-                              variant={selectedColor === color ? "default" : "outline"}
+                              variant={
+                                selectedColor === color ? "default" : "outline"
+                              }
                               size="sm"
                               onClick={() => setSelectedColor(color)}
                             >
@@ -191,12 +210,14 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex gap-2 mt-auto pt-4">
                       <Button
                         className="flex-1"
                         onClick={() => {
-                          handleQuickAdd(new Event('click') as React.MouseEvent);
+                          handleQuickAdd(
+                            new Event("click") as React.MouseEvent,
+                          );
                           setShowQuickView(false);
                         }}
                       >
@@ -210,7 +231,9 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
                           setShowQuickView(false);
                         }}
                       >
-                        <Heart className={`h-4 w-4 ${inWatchlist ? 'fill-primary text-primary' : ''}`} />
+                        <Heart
+                          className={`h-4 w-4 ${inWatchlist ? "fill-primary text-primary" : ""}`}
+                        />
                       </Button>
                     </div>
                   </div>
@@ -220,8 +243,8 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
           </Dialog>
 
           {/* Product Image */}
-          <img 
-            src={product.images[0]} 
+          <img
+            src={product.images[0]}
             alt={product.name}
             className="w-full aspect-[3/4] object-cover"
           />
@@ -231,8 +254,11 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
             <div className="absolute bottom-0 left-0 right-0 bg-white/90 p-4 transition-all duration-300">
               {/* Size Options */}
               <div className="flex gap-2 mb-3 justify-center">
-                {product.sizes.map(size => (
-                  <div key={size} className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-sm">
+                {product.sizes.map((size) => (
+                  <div
+                    key={size}
+                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-sm"
+                  >
                     {size}
                   </div>
                 ))}
@@ -240,10 +266,7 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
 
               {/* Action Buttons */}
               <div className="flex gap-2">
-                <Button
-                  className="flex-1 h-9"
-                  onClick={handleQuickAdd}
-                >
+                <Button className="flex-1 h-9" onClick={handleQuickAdd}>
                   <ShoppingCart className="h-4 w-4 mr-1" />
                   Quick Add
                 </Button>
@@ -252,7 +275,9 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
                   className="h-9 px-3"
                   onClick={handleToggleWatchlist}
                 >
-                  <Heart className={`h-4 w-4 ${inWatchlist ? 'fill-primary text-primary' : ''}`} />
+                  <Heart
+                    className={`h-4 w-4 ${inWatchlist ? "fill-primary text-primary" : ""}`}
+                  />
                 </Button>
               </div>
             </div>
@@ -265,11 +290,17 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
           <div className="flex items-baseline gap-2">
             {product.salePrice ? (
               <>
-                <span className="text-primary font-semibold">₹{product.salePrice}</span>
-                <span className="text-gray-400 line-through text-sm">₹{product.price}</span>
+                <span className="text-primary font-semibold">
+                  ₹{product.salePrice}
+                </span>
+                <span className="text-gray-400 line-through text-sm">
+                  ₹{product.price}
+                </span>
               </>
             ) : (
-              <span className="text-primary font-semibold">₹{product.price}</span>
+              <span className="text-primary font-semibold">
+                ₹{product.price}
+              </span>
             )}
           </div>
         </div>
@@ -277,7 +308,7 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
     );
   }
 
-  return null; 
+  return null;
 };
 
 export default ProductCard;

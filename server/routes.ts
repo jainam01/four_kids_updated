@@ -102,6 +102,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const products = await storage.getProducts(filters);
+
+      //Make call to our Backend API
       res.json(products);
     } catch (error) {
       handleError(res, error);
