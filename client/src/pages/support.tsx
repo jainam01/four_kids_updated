@@ -1,95 +1,138 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+"use client";
+
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import {
-  MessageCircle,
-  Mail,
-  Phone,
-  HelpCircle,
-  Clock,
-  ArrowRight,
-} from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+} from "@/components/ui/accordion";
+import { MessageCircle, Mail, Phone, HelpCircle, Clock } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import PageHeader from "@/components/PageHeader";
 
-const PageHeader = ({ title, currentPage }) => {
-  return (
-    <div className="relative py-16 px-4 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/placeholder.svg")` }}>
-      <div className="container mx-auto text-center text-white z-10 relative">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
-        <nav aria-label="Breadcrumb">
-          <ol className="flex justify-center items-center space-x-2">
-            <li>
-              <a className="hover:text-primary transition-colors flex items-center" href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-house h-4 w-4 mr-1">
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                Home
-              </a>
-            </li>
-            <li className="flex items-center">
-              <ArrowRight className="h-4 w-4 mx-2 text-gray-300" />
-              <span className="text-primary">{currentPage}</span>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-  );
-};
+declare global {
+  interface Window {
+    Tawk_API?: any;
+    Tawk_LoadStart?: Date;
+  }
+}
 
-
-const Support = () => {
+export default function Support() {
   const { toast } = useToast();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [subject, setSubject] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [subject, setSubject] = useState("");
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (typeof window !== "undefined" && !window.Tawk_API) {
+      window.Tawk_LoadStart = new Date();
+      const script = document.createElement("script");
+      script.src = "https://embed.tawk.to/681ef8d75fa91f190c499d6b/1iqsfo300";
+      script.async = true;
+      script.charset = "UTF-8";
+      script.setAttribute("crossorigin", "*");
+
+      script.onload = () => {
+        console.log("Tawk.to loaded");
+      };
+
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  const showPopup = (message: string) => {
+    setPopupMessage(message);
+    setPopupVisible(true);
+    setTimeout(() => {
+      setPopupVisible(false);
+    }, 5000); // Popup will disappear after 5 seconds
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
+      showPopup("Please fill in all required fields.");
+      return;
+    }
 
-    // Here you would typically send the data to your API
-    toast({
-      title: "Support request submitted",
-      description: "We'll get back to you as soon as possible.",
-    });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      showPopup("Please enter a valid email address.");
+      return;
+    }
 
-    // Reset form
-    setName('');
-    setEmail('');
-    setMessage('');
-    setSubject('');
+    try {
+      const response = await fetch("/api/send-support-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      if (!response.ok) throw new Error("Failed to send email");
+
+      showPopup("Support request sent successfully!");
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (error) {
+      showPopup("Failed to send your message. Please try again.");
+    }
+  };
+
+  const handleCallbackRequest = async () => {
+    try {
+      const res = await fetch("/api/request-callback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email }),
+      });
+
+      if (!res.ok) throw new Error("Failed to request callback");
+
+      showPopup("Our team will contact you shortly.");
+    } catch (error) {
+      showPopup("Failed to request callback. Please try again.");
+    }
   };
 
   const faqItems = [
     {
       question: "How do I track my order?",
-      answer: "You can track your order by logging into your account and visiting the 'Order History' section. Alternatively, use the tracking number provided in your shipping confirmation email."
+      answer:
+        "You can track your order by logging into your account and visiting the 'Order History' section.",
     },
     {
       question: "What is your return policy?",
-      answer: "We offer a 30-day return policy. Items must be unworn, unwashed, and with all original tags attached. Please visit our Return Portal to initiate a return."
+      answer:
+        "We offer a 30-day return policy. Items must be unworn and with all original tags.",
     },
     {
       question: "How do I find the right size for my child?",
-      answer: "We provide a comprehensive size guide for each product category. You can find it on product pages or in the 'Size Guide' section of our website. Measure your child and compare to our charts for the best fit."
+      answer:
+        "Use the size guide available on product pages to find the perfect fit.",
     },
     {
       question: "Do you offer wholesale pricing?",
-      answer: "Yes, we offer wholesale pricing for qualified retailers. Please contact our wholesale department at wholesale@fourkids.com for more information."
+      answer:
+        "Yes, please email wholesale@fourkids.com for details on becoming a wholesale partner.",
     },
     {
       question: "How can I cancel my order?",
-      answer: "If your order hasn't shipped yet, you can cancel it by contacting our customer service team. Once an order has shipped, you'll need to wait for it to arrive and then follow our return process."
-    }
+      answer:
+        "If it hasn't shipped yet, contact customer service. Otherwise, return it once it arrives.",
+    },
   ];
 
   return (
@@ -97,137 +140,170 @@ const Support = () => {
       <PageHeader title="Customer Support" currentPage="Support" />
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
+          {/* Popup Notification */}
+          {popupVisible && (
+            <div
+              className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary text-white p-3 rounded-lg shadow-lg"
+              style={{
+                position: "fixed",
+                bottom: "4%",
+                left: "50%",
+                transform: "translateX(-50%)",
+                backgroundColor: "#4CAF50", // Green for success
+                color: "white",
+                padding: "12px 20px",
+                borderRadius: "8px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                fontWeight: "bold",
+                zIndex: 9999,
+                transition: "opacity 0.3s ease",
+              }}
+            >
+              {popupMessage}
+            </div>
+          )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {/* Live Chat */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border text-center transition hover:shadow-lg">
               <div className="mb-4 bg-primary/10 inline-flex p-3 rounded-full">
                 <MessageCircle className="h-6 w-6 text-primary" />
               </div>
               <h3 className="text-lg font-bold mb-2">Live Chat</h3>
-              <p className="text-gray-600 mb-4 text-sm">Get instant help from our support team</p>
-              <div className="text-xs text-gray-500 flex items-center justify-center">
+              <p className="text-gray-600 mb-4 text-sm">
+                Get instant help from our support team
+              </p>
+              <div className="text-xs text-gray-500 flex items-center justify-center mb-2">
                 <Clock className="h-3 w-3 mr-1" />
-                <span>Available 9AM - 5PM EST</span>
+                <span>9AM - 5PM EST</span>
               </div>
+              <Button
+                className="mt-2"
+                onClick={() => window.Tawk_API?.maximize()}
+              >
+                Start Chat
+              </Button>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+            {/* Email */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border text-center transition hover:shadow-lg">
               <div className="mb-4 bg-primary/10 inline-flex p-3 rounded-full">
                 <Mail className="h-6 w-6 text-primary" />
               </div>
               <h3 className="text-lg font-bold mb-2">Email Support</h3>
-              <p className="text-gray-600 mb-4 text-sm">Send us an email and we'll respond within 24 hours</p>
-              <a href="mailto:support@fourkids.com" className="text-primary text-sm font-medium">support@fourkids.com</a>
+              <p className="text-gray-600 mb-4 text-sm">
+                We'll respond within 24 hours
+              </p>
+              <a
+                href="mailto:support@fourkids.com"
+                className="text-primary text-sm font-medium"
+              >
+                support@fourkids.com
+              </a>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+            {/* Phone */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border text-center transition hover:shadow-lg">
               <div className="mb-4 bg-primary/10 inline-flex p-3 rounded-full">
                 <Phone className="h-6 w-6 text-primary" />
               </div>
               <h3 className="text-lg font-bold mb-2">Phone Support</h3>
-              <p className="text-gray-600 mb-4 text-sm">Call us directly for immediate assistance</p>
-              <a href="tel:1-800-555-KIDS" className="text-primary text-sm font-medium">1-800-555-KIDS</a>
+              <p className="text-gray-600 mb-4 text-sm">
+                Prefer to talk? Request a callback!
+              </p>
+              <Button className="mt-2" onClick={handleCallbackRequest}>
+                Request a Callback
+              </Button>
+            </div>
+
+            {/* Track Order */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border text-center transition hover:shadow-lg">
+              <div className="mb-4 bg-primary/10 inline-flex p-3 rounded-full">
+                <HelpCircle className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Track Your Order</h3>
+              <p className="text-gray-600 mb-4 text-sm">
+                Enter your order number to get real-time delivery updates
+              </p>
+              <a href="/track-order">
+                <Button className="mt-2">Track Now</Button>
+              </a>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div>
               <h2 className="text-2xl font-bold mb-6">Contact Us</h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Your Name
                   </label>
                   <Input
-                    id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Jane Doe"
                     required
-                    className="w-full"
+                    placeholder="Jane Doe"
                   />
                 </div>
-
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
                   </label>
                   <Input
-                    id="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="jane@example.com"
                     required
-                    className="w-full"
+                    placeholder="jane@example.com"
                   />
                 </div>
-
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Subject
                   </label>
                   <Input
-                    id="subject"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    placeholder="Order #12345"
                     required
-                    className="w-full"
+                    placeholder="Order #12345"
                   />
                 </div>
-
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Message
                   </label>
                   <Textarea
-                    id="message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="How can we help you?"
                     required
-                    className="w-full min-h-[120px]"
+                    placeholder="Your message here..."
                   />
                 </div>
-
-                <Button type="submit" className="w-full">Send Message</Button>
+                <Button type="submit" className="w-full mt-4">
+                  Send Message
+                </Button>
               </form>
             </div>
 
             {/* FAQs */}
             <div>
-              <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
-              <Accordion type="single" collapsible className="w-full">
-                {faqItems.map((item, index) => (
-                  <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger className="text-left font-medium">
-                      {item.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-gray-600">
-                      {item.answer}
-                    </AccordionContent>
+              <h2 className="text-2xl font-bold mb-6">
+                Frequently Asked Questions
+              </h2>
+              <Accordion type="single" collapsible>
+                {faqItems.map((item, idx) => (
+                  <AccordionItem key={idx} value={`item-${idx}`}>
+                    <AccordionTrigger>{item.question}</AccordionTrigger>
+                    <AccordionContent>{item.answer}</AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
-
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
-                <div className="flex items-start">
-                  <HelpCircle className="h-5 w-5 text-primary mr-3 mt-0.5" />
-                  <div>
-                    <p className="text-sm text-gray-600">
-                      Can't find what you're looking for? Browse our <a href="/faq" className="text-primary font-medium">full FAQ section</a> or contact our support team.
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </>
   );
-};
-
-export default Support;
+}

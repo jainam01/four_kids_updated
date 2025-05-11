@@ -37,7 +37,7 @@ function Router() {
           <Route path="/support" component={Support} />
           <Route path="/admin" component={Admin} />
           <Route path="/about" component={About} />
-          <Route path="/category/wholesale" component={Wholesale} />
+          <Route path="/wholesale" component={Wholesale} />
           <Route path="/login" component={Login} />
           <Route component={NotFound} />
         </Switch>

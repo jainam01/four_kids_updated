@@ -1,0 +1,69 @@
+"I want to convert my existing React frontend application to an Angular (latest stable version, e.g., Angular 17) application. The backend will be a new Node.js (using Express.js) application with MongoDB as the database (using Mongoose as the ODM).
+
+**Current React Application Overview:**
+*   **Frontend Framework:** React (with TypeScript)
+*   **Key Features:**
+    *   Product display (lists, categories, detail pages)
+    *   Search functionality (with autocomplete and a dedicated search results page)
+    *   Shopping cart
+    *   User watchlist
+    *   User authentication (login/registration - if applicable)
+    *   Admin panel (if applicable)
+*   **Styling:** Tailwind CSS (I want to continue using Tailwind CSS with Angular)
+*   **State Management:** [Specify your current state management: e.g., React Context, Zustand, Redux, TanStack Query for server state]
+*   **Routing:** `wouter`
+*   **UI Components:** [Mention if you're using a library like Shadcn UI, Material UI, or custom components]
+*   **Key Custom Hooks:** [List any important custom hooks, e.g., `useSearch`, `useIsMobile`]
+
+**Target Angular + Node.js + MongoDB Stack:**
+*   **Frontend:** Angular (latest stable version) with TypeScript.
+    *   Use Angular Services for shared logic and data fetching.
+    *   Use RxJS for reactive programming and handling asynchronous operations.
+    *   Use Angular's built-in Router for navigation.
+    *   Continue using Tailwind CSS for styling.
+    *   For UI components, suggest Angular equivalents or how to best structure custom components with Tailwind.
+*   **Backend:** Node.js with Express.js.
+    *   Create RESTful API endpoints.
+    *   Implement [mention key backend features like authentication, product management, order processing].
+*   **Database:** MongoDB with Mongoose ODM.
+    *   Define Mongoose schemas for collections like `products`, `users`, `categories`, `carts`, `watchlists`.
+
+**Conversion Request (Piece by Piece - This is how you'd actually work with the AI):**
+
+**1. Project Setup:**
+    *   "Please provide the commands and initial project structure for setting up an Angular frontend project (using Angular CLI) and a Node.js/Express.js backend project. Include basic setup for Tailwind CSS in the Angular project."
+    *   "Show how to set up Mongoose to connect to a local MongoDB instance in the Node.js backend."
+
+**2. Component Conversion (Example: `Header.tsx` to `header.component.ts` and `header.component.html`):**
+    *   "Here is my React `Header.tsx` component code: [Paste your Header.tsx code].
+    *   Please convert this to an Angular component.
+    *   - The top links (`Support`, `Wholesale`, `About Us`) should use Angular routing.
+    *   - The logo should be a link to the home page.
+    *   - The main navigation links (`FEATURED`, `PANTS`, etc.) should also use Angular routing and show submenus on hover (similar to the current CSS-driven approach if possible, or suggest an Angular way).
+    *   - The search input in the header should, on submit, navigate to an Angular route like `/search?q=query`.
+    *   - The user, watchlist, and cart icons should navigate to their respective Angular routes. Show how to display badge counts (we'll handle the state for these counts later using services).
+    *   - The mobile menu (Sheet) should be implemented using a suitable Angular approach (e.g., a simple conditional rendering with CSS, or an Angular UI library component if one is easily integratable with Tailwind).
+    *   - How would the `useCart` and `useWatchlist` contexts be translated to Angular services to get `cartItems.length` and `watchlistItems.length`?"
+
+**3. Service Creation (Example: Search Service):**
+    *   "My React app has a `useSearch` hook: [Paste your `use-search.tsx` (Option 1 code from previous discussion)].
+    *   How would I create an Angular service (`SearchService`) that provides similar functionality?
+    *   - It should have a method to set the search term.
+    *   - It should debounce the term.
+    *   - It should make an HTTP GET request (using Angular's `HttpClient`) to a backend API endpoint like `/api/products/suggestions?term=[searchTerm]&limit=5` to fetch autocomplete suggestions.
+    *   - The service should expose an Observable of search results (Product[]).
+    *   - It should expose an Observable for the loading state."
+
+**4. Backend API Endpoint (Example: Product Suggestions):**
+    *   "For the Angular `SearchService`, I need a Node.js/Express.js backend API endpoint: `GET /api/products/suggestions`.
+    *   This endpoint should accept a `term` query parameter and a `limit` query parameter.
+    *   It should query the MongoDB `products` collection (using Mongoose) to find products where the name or description matches the term (case-insensitive regex).
+    *   It should return a limited number of products (e.g., 5).
+    *   Show the Mongoose schema for the `Product` model."
+
+**General Guidelines for the AI:**
+*   "Prioritize clarity and modern Angular best practices."
+*   "For state that needs to be shared across components (like cart data, user session), please demonstrate using Angular services and RxJS Observables."
+*   "Explain any significant differences in approach between the React code and the Angular equivalent."
+*   "Provide code snippets for both the Angular component (`.ts` and `.html`) and any necessary services or backend routes."
+*   "Assume I have a basic understanding of Angular and Node.js concepts but guide me through the specifics of this conversion."

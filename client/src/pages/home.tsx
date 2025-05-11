@@ -5,20 +5,29 @@ import CategorySelection from "@/components/CategorySelection";
 import FeaturedCollection from "@/components/FeaturedCollection";
 import WholesaleCTA from "@/components/WholesaleCTA";
 import OffersBanner from "@/components/OffersBanner";
+import WhyChoose from "@/components/WhyChoose";
 
 const Home = () => {
   return (
     <>
       <Helmet>
         <title>FourKids - Children's Clothing Store</title>
-        <meta name="description" content="Quality children's clothing for all occasions. Shop our collection of kids fashion items." />
+        <meta
+          name="description"
+          content="Quality children's clothing for all occasions. Shop our collection of kids fashion items."
+        />
       </Helmet>
 
-      <div className="pb-16 md:pb-0 bg-gray-50"> {/* Add padding at bottom for mobile navigation */}
+      <div className="pb-16 md:pb-0 bg-gray-50">
+        {" "}
+        {/* Add padding at bottom for mobile navigation */}
         <HeroSection />
         <OffersBanner />
-        <CategorySelection />
+        <CategorySelection
+          onCategorySelect={(category) => console.log(category)}
+        />
         <FeaturedCollection />
+        <WhyChoose />
         <WholesaleCTA />
       </div>
     </>

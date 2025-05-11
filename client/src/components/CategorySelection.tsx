@@ -1,137 +1,121 @@
-import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "wouter";
-import { ChevronRight } from "lucide-react";
-import { Category } from "@shared/schema";
-import { Skeleton } from "@/components/ui/skeleton";
+import React, { useState } from "react";
 
-const CategorySelection = () => {
-  const [, navigate] = useLocation();
-  const { data: categories, isLoading } = useQuery<Category[]>({
-    queryKey: ["/api/categories"],
-  });
+interface Category {
+  name: string;
+  slug: string;
+  image?: string;
+}
 
-  const handleCategoryClick = (slug: string) => {
-    navigate(`/category/${slug}`);
+interface CategorySelectionProps {
+  categories?: Category[];
+  selectedCategory?: string;
+  onCategorySelect: (slug: string) => void;
+}
+
+const defaultCategories: Category[] = [
+  {
+    name: "Basic pent",
+    slug: "cotton-dresses",
+    image: "/categories/cotton.jpg",
+  },
+  {
+    name: "Cargo pent",
+    slug: "salwar-kameez",
+    image: "/categories/salwar.jpg",
+  },
+  {
+    name: "Capri",
+    slug: "short-kurtis",
+    image: "/categories/kurti.jpg",
+  },
+  { name: "Short", slug: "plus-size", image: "/categories/plus.jpg" },
+  { name: "Mom fit", slug: "tops", image: "/categories/tops.jpg" },
+  /*{
+    name: "Men’s Kurta Set",
+    slug: "mens-kurta",
+    image: "/categories/mens.jpg",
+  },
+  {
+    name: "Jaipuri Tops",
+    slug: "jaipuri-tops",
+    image: "/categories/jaipuri.jpg",
+  },
+  {
+    name: "Wedding Saree",
+    slug: "wedding-saree",
+    image: "/categories/wedding.jpg",
+  },
+
+  {
+    name: "Embellished Saree",
+    slug: "embellished-saree",
+    image: "/categories/embellished.jpg",
+  },*/
+];
+
+const CategorySelection: React.FC<CategorySelectionProps> = ({
+  categories,
+  selectedCategory,
+  onCategorySelect,
+}) => {
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleCategories = () => {
+    const data = categories?.length ? categories : defaultCategories;
+    if (showAll || typeof window === "undefined") return data;
+    const width = window.innerWidth;
+    if (width < 640) return data.slice(0, 4);
+    if (width < 768) return data.slice(0, 6);
+    return data;
   };
 
-  // Extended category type to handle the image property
-  type ExtendedCategory =
-    | Category
-    | {
-        name: string;
-        slug: string;
-        image: string;
-      };
-
-  const categoryData: ExtendedCategory[] = [
-    {
-      name: "Basic Pants",
-      slug: "basic-pants",
-      image: "/placeholder.svg",
-    },
-    {
-      name: "Cargo Pants",
-      slug: "cargo-pants",
-      image: "/placeholder.svg",
-    },
-    {
-      name: "Capri Pants",
-      slug: "capri-pants",
-      image: "/placeholder.svg",
-    },
-    {
-      name: "Shorts Collection",
-      slug: "shorts",
-      image: "/placeholder.svg",
-    },
-  ];
+  const handleCategoryClick = (slug: string) => {
+    onCategorySelect(slug);
+  };
 
   return (
-    <div className="container mx-auto px-12 md:px-20 my-16">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-3">Shop by Category</h2>
-        <div className="w-20 h-1 bg-primary mx-auto"></div>
-      </div>
+    <div className="py-6 px-4 text-center">
+      {/* Centered Title Above Cards */}
+      <h2 className="text-xl font-bold text-gray-900 mb-8">
+        CATEGORIES TO BAG
+      </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {isLoading
-          ? Array(4)
-              .fill(0)
-              .map((_, index) => (
-                <div
-                  key={index}
-                  className="relative overflow-hidden rounded-lg"
-                >
-                  <Skeleton className="aspect-[4/5] w-full" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
-                    <Skeleton className="h-6 w-24" />
-                  </div>
-                </div>
-              ))
-          : (categories?.length ? categories.slice(0, 4) : categoryData).map(
-              (cat, index) => (
-                <a
-                  key={index}
-                  href={`/category/${cat.slug}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleCategoryClick(cat.slug);
-                  }}
-                >
-                  <div className="group relative overflow-hidden rounded-lg transition-all duration-500 hover:shadow-xl hover:scale-[1.02]">
-                    <div className="aspect-[4/5] w-full overflow-hidden">
-                      <img
-                        src={
-                          "image" in cat
-                            ? (cat as { image: string }).image
-                            : "/placeholder.svg"
-                        }
-                        alt={cat.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-300"></div>
-
-                    <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                      <h3 className="text-lg md:text-xl font-bold mb-1 group-hover:text-white/90 transition-colors">
-                        {cat.name}
-                      </h3>
-
-                      <span className="inline-flex items-center text-xs font-medium text-white/80 group-hover:text-white transition-colors">
-                        Shop Now
-                        <ChevronRight className="h-3 w-3 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-                      </span>
-                    </div>
-                  </div>
-                </a>
-              ),
-            )}
-      </div>
-
-      <div class="flex justify-center mt-14">
-        <a
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border h-10 group bg-transparent border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 px-6 py-2 inline-flex items-center"
-          href="/categories"
-        >
-          View All Categories
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-arrow-right ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {visibleCategories().map((cat, index) => (
+          <div
+            key={index}
+            onClick={() => handleCategoryClick(cat.slug)}
+            className={`cursor-pointer group p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition duration-300 hover:-translate-y-1 text-center ${
+              cat.slug === selectedCategory
+                ? "border border-primary shadow-md scale-[1.02]"
+                : ""
+            }`}
           >
-            <path d="M5 12h14"></path>
-            <path d="m12 5 7 7-7 7"></path>
-          </svg>
-        </a>
+            <div className="mx-auto w-16 h-16 rounded-full overflow-hidden mb-3 border border-gray-200">
+              <img
+                src={cat.image || "/placeholder.svg"}
+                alt={cat.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="text-sm font-semibold text-gray-800 group-hover:underline group-hover:text-primary">
+              {cat.name}
+            </h3>
+          </div>
+        ))}
       </div>
+
+      {/* Show More Button on Small Screens */}
+      {!showAll && (
+        <div className="mt-2 sm:hidden">
+          <button
+            onClick={() => setShowAll(true)}
+            className="bg-black text-white font-semibold py-2 px-6 rounded-md hover:bg-gray-800"
+          >
+            Show More
+          </button>
+        </div>
+      )}
     </div>
   );
 };
