@@ -31,17 +31,24 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
   const handleQuickAdd = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
+      if (!product.sizes.length || !product.colors.length) {
+        setShowQuickView(true);
+        return;
+      }
+
       await addToCart({
         productId: product.id,
         quantity: 1,
-        size: product.sizes[0],
-        color: product.colors[0]
+        size: selectedSize || product.sizes[0],
+        color: selectedColor || product.colors[0]
       });
+
       toast({
         title: "Added to cart",
         description: `${product.name} has been added to your cart.`,
       });
     } catch (error) {
+      console.error("Error adding to cart:", error);
       toast({
         title: "Error",
         description: "Failed to add product to cart",
@@ -67,6 +74,7 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
         });
       }
     } catch (error) {
+      console.error("Error updating watchlist:", error);
       toast({
         title: "Error",
         description: "Failed to update watchlist",
@@ -117,6 +125,7 @@ const ProductCard = ({ product, viewMode = "grid", showHoverEffects = true }: Pr
 
           <Dialog open={showQuickView} onOpenChange={setShowQuickView}>
             <DialogContent className="sm:max-w-2xl">
+              <h2 className="text-lg font-semibold mb-4" id="dialog-title">Quick View - {product.name}</h2>
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="relative">
