@@ -380,7 +380,7 @@ export class MemStorage implements IStorage {
     ];
     
     categories.forEach(category => this.createCategory(category));
-
+//kjhkljh
     // Add products
     const products: InsertProduct[] = [
       {
